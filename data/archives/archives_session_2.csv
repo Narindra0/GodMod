@@ -1,0 +1,405 @@
+=== RESULTATS ===
+Journee,Equipe_Dom,Equipe_Ext,Score_Dom,Score_Ext
+6,Sunderland,Manchester Blue,0,3
+6,Brighton,Crystal Palace,2,0
+6,West Ham,London Blues,2,0
+6,Bournemouth,Wolverhampton,1,1
+6,Newcastle,Brentford,3,2
+6,Spurs,Liverpool,2,1
+6,Burnley,Fulham,1,1
+6,Leeds,N. Forest,3,2
+6,Everton,Aston Villa,0,1
+6,Manchester Red,London Reds,2,0
+7,Brentford,Liverpool,5,1
+7,Aston Villa,Newcastle,1,1
+7,London Reds,Spurs,3,3
+7,West Ham,Burnley,3,3
+7,Wolverhampton,Brighton,2,2
+7,Manchester Blue,Bournemouth,3,0
+7,London Blues,Sunderland,3,1
+7,Crystal Palace,Manchester Red,1,2
+7,N. Forest,Everton,3,0
+7,Fulham,Leeds,1,2
+8,Everton,Fulham,1,1
+8,Spurs,Crystal Palace,3,2
+8,Brentford,London Reds,3,1
+8,Leeds,West Ham,3,3
+8,Newcastle,N. Forest,2,1
+8,Brighton,Manchester Blue,3,0
+8,Burnley,London Blues,0,0
+8,Bournemouth,Sunderland,3,1
+8,Liverpool,Aston Villa,3,1
+8,Manchester Red,Wolverhampton,2,3
+9,Aston Villa,London Reds,2,1
+9,Burnley,Leeds,2,1
+9,West Ham,Everton,2,1
+9,Manchester Blue,Manchester Red,0,1
+9,N. Forest,Liverpool,2,1
+9,Sunderland,Brighton,0,1
+9,Wolverhampton,Spurs,1,3
+9,London Blues,Bournemouth,1,1
+9,Fulham,Newcastle,2,3
+9,Crystal Palace,Brentford,3,0
+10,Spurs,Manchester Blue,3,3
+10,Manchester Red,Sunderland,3,0
+10,Newcastle,West Ham,4,0
+10,Everton,Burnley,2,0
+10,Brighton,Bournemouth,3,1
+10,Aston Villa,Crystal Palace,4,0
+10,Brentford,Wolverhampton,3,1
+10,Liverpool,Fulham,1,2
+10,London Reds,N. Forest,1,0
+10,Leeds,London Blues,0,0
+11,Sunderland,Spurs,1,1
+11,Leeds,Everton,0,1
+11,N. Forest,Crystal Palace,1,1
+11,Wolverhampton,Aston Villa,2,1
+11,Burnley,Newcastle,2,2
+11,Manchester Blue,Brentford,3,0
+11,Bournemouth,Manchester Red,3,0
+11,Fulham,London Reds,0,0
+11,London Blues,Brighton,2,2
+11,West Ham,Liverpool,0,2
+12,Spurs,Bournemouth,4,1
+12,Newcastle,Leeds,4,0
+12,Aston Villa,Manchester Blue,2,1
+12,Brentford,Sunderland,3,2
+12,N. Forest,Wolverhampton,1,0
+12,London Reds,West Ham,1,2
+12,Manchester Red,Brighton,0,0
+12,Crystal Palace,Fulham,1,0
+12,Liverpool,Burnley,3,0
+12,Everton,London Blues,1,1
+13,Brighton,Spurs,1,2
+13,Everton,Newcastle,1,3
+13,Bournemouth,Brentford,0,0
+13,Fulham,Wolverhampton,2,0
+13,London Blues,Manchester Red,2,2
+13,Burnley,London Reds,0,2
+13,Leeds,Liverpool,0,0
+13,West Ham,Crystal Palace,2,2
+13,Sunderland,Aston Villa,1,2
+13,Manchester Blue,N. Forest,2,2
+14,Crystal Palace,Burnley,3,0
+14,Fulham,Manchester Blue,1,0
+14,N. Forest,Sunderland,2,3
+14,Brentford,Brighton,1,1
+14,Wolverhampton,West Ham,1,1
+14,London Reds,Leeds,1,1
+14,Newcastle,London Blues,1,0
+14,Liverpool,Everton,5,0
+14,Spurs,Manchester Red,0,0
+14,Aston Villa,Bournemouth,2,4
+15,Brighton,Aston Villa,1,1
+15,Sunderland,Fulham,0,2
+15,Leeds,Crystal Palace,2,2
+15,London Blues,Spurs,3,3
+15,Bournemouth,N. Forest,3,0
+15,West Ham,Manchester Blue,2,4
+15,Everton,London Reds,0,1
+15,Burnley,Wolverhampton,2,0
+15,Manchester Red,Brentford,3,2
+15,Newcastle,Liverpool,1,1
+16,London Reds,Newcastle,2,0
+16,Aston Villa,Manchester Red,0,3
+16,Brentford,Spurs,2,3
+16,Crystal Palace,Everton,1,0
+16,N. Forest,Brighton,4,1
+16,Fulham,Bournemouth,2,1
+16,West Ham,Sunderland,3,2
+16,Liverpool,London Blues,1,1
+16,Wolverhampton,Leeds,2,2
+16,Manchester Blue,Burnley,2,1
+17,Leeds,Manchester Blue,0,5
+17,Spurs,Aston Villa,2,1
+17,Everton,Wolverhampton,2,0
+17,Manchester Red,N. Forest,3,1
+17,Brighton,Fulham,1,3
+17,Newcastle,Crystal Palace,1,0
+17,Liverpool,London Reds,1,2
+17,Burnley,Sunderland,0,0
+17,London Blues,Brentford,3,0
+17,Bournemouth,West Ham,3,1
+18,Fulham,Manchester Red,0,0
+18,N. Forest,Spurs,0,2
+18,London Reds,London Blues,3,0
+18,Manchester Blue,Everton,0,0
+18,Crystal Palace,Liverpool,1,3
+18,West Ham,Brighton,1,3
+18,Aston Villa,Brentford,2,2
+18,Burnley,Bournemouth,1,1
+18,Wolverhampton,Newcastle,0,2
+18,Sunderland,Leeds,4,0
+19,Spurs,Fulham,1,0
+19,London Blues,Aston Villa,3,1
+19,Newcastle,Manchester Blue,3,0
+19,Everton,Sunderland,1,0
+19,Brentford,N. Forest,0,1
+19,Liverpool,Wolverhampton,4,0
+19,Leeds,Bournemouth,1,3
+19,Brighton,Burnley,2,1
+19,London Reds,Crystal Palace,2,2
+19,Manchester Red,West Ham,1,1
+20,Bournemouth,Everton,1,1
+20,Wolverhampton,London Reds,1,3
+20,West Ham,Spurs,0,0
+20,Fulham,Brentford,3,1
+20,Manchester Blue,Liverpool,3,0
+20,N. Forest,Aston Villa,1,4
+20,Leeds,Brighton,2,3
+20,Sunderland,Newcastle,1,4
+20,Crystal Palace,London Blues,1,0
+20,Burnley,Manchester Red,1,1
+21,London Blues,N. Forest,0,2
+21,Manchester Red,Leeds,3,1
+21,Aston Villa,Fulham,0,0
+21,Spurs,Burnley,4,2
+21,Brentford,West Ham,0,0
+21,Crystal Palace,Wolverhampton,1,1
+21,Liverpool,Sunderland,3,0
+21,Newcastle,Bournemouth,4,0
+21,Everton,Brighton,0,2
+21,London Reds,Manchester Blue,2,0
+22,Burnley,Brentford,1,2
+22,West Ham,Aston Villa,2,1
+22,Sunderland,London Reds,0,4
+22,Everton,Manchester Red,1,1
+22,Leeds,Spurs,1,4
+22,Bournemouth,Liverpool,0,4
+22,Manchester Blue,Crystal Palace,1,1
+22,Brighton,Newcastle,1,1
+22,Wolverhampton,London Blues,0,3
+22,Fulham,N. Forest,3,2
+23,N. Forest,West Ham,5,0
+23,Spurs,Everton,0,3
+23,Newcastle,Manchester Red,1,0
+23,Wolverhampton,Manchester Blue,1,4
+23,London Reds,Bournemouth,0,1
+23,London Blues,Fulham,1,2
+23,Liverpool,Brighton,1,1
+23,Aston Villa,Burnley,3,1
+23,Brentford,Leeds,1,3
+23,Crystal Palace,Sunderland,3,1
+24,Bournemouth,Crystal Palace,0,2
+24,Everton,Brentford,1,1
+24,Manchester Blue,London Blues,2,0
+24,Sunderland,Wolverhampton,0,1
+24,Manchester Red,Liverpool,3,3
+24,Leeds,Aston Villa,0,2
+24,West Ham,Fulham,3,1
+24,Brighton,London Reds,2,0
+24,Newcastle,Spurs,3,2
+24,Burnley,N. Forest,0,0
+25,London Reds,Manchester Red,3,2
+25,Aston Villa,Everton,2,0
+25,N. Forest,Leeds,0,1
+25,Fulham,Burnley,2,1
+25,Liverpool,Spurs,3,0
+25,Manchester Blue,Sunderland,0,0
+25,Brentford,Newcastle,3,2
+25,Wolverhampton,Bournemouth,1,2
+25,London Blues,West Ham,0,1
+25,Crystal Palace,Brighton,2,1
+26,Everton,N. Forest,2,2
+26,Manchester Red,Crystal Palace,4,2
+26,Sunderland,London Blues,1,4
+26,Bournemouth,Manchester Blue,4,0
+26,Leeds,Fulham,1,2
+26,Brighton,Wolverhampton,1,0
+26,Burnley,West Ham,1,2
+26,Liverpool,Brentford,2,0
+26,Spurs,London Reds,0,1
+26,Newcastle,Aston Villa,0,2
+27,Wolverhampton,Manchester Red,1,3
+27,Aston Villa,Liverpool,4,2
+27,Sunderland,Bournemouth,2,1
+27,London Blues,Burnley,3,1
+27,Manchester Blue,Brighton,2,3
+27,N. Forest,Newcastle,0,0
+27,West Ham,Leeds,1,0
+27,Fulham,Everton,3,0
+27,London Reds,Brentford,0,1
+27,Crystal Palace,Spurs,0,1
+28,London Reds,Aston Villa,3,1
+28,Leeds,Burnley,1,0
+28,Everton,West Ham,2,1
+28,Manchester Red,Manchester Blue,4,0
+28,Liverpool,N. Forest,2,0
+28,Brighton,Sunderland,4,0
+28,Spurs,Wolverhampton,0,2
+28,Bournemouth,London Blues,0,0
+28,Newcastle,Fulham,1,0
+28,Brentford,Crystal Palace,3,1
+29,Manchester Blue,Spurs,1,0
+29,Sunderland,Manchester Red,1,1
+29,West Ham,Newcastle,1,2
+29,Burnley,Everton,0,1
+29,Bournemouth,Brighton,1,2
+29,Crystal Palace,Aston Villa,1,2
+29,Wolverhampton,Brentford,0,2
+29,Fulham,Liverpool,1,1
+29,N. Forest,London Reds,1,1
+29,London Blues,Leeds,3,1
+30,Spurs,Sunderland,4,0
+30,Everton,Leeds,1,1
+30,Crystal Palace,N. Forest,0,0
+30,Aston Villa,Wolverhampton,3,1
+30,Newcastle,Burnley,1,1
+30,Brentford,Manchester Blue,1,1
+30,Manchester Red,Bournemouth,2,0
+30,London Reds,Fulham,1,0
+30,Brighton,London Blues,1,3
+30,Liverpool,West Ham,3,0
+31,Bournemouth,Spurs,4,1
+31,Leeds,Newcastle,1,2
+31,Manchester Blue,Aston Villa,1,0
+31,Sunderland,Brentford,0,2
+31,Wolverhampton,N. Forest,1,1
+31,West Ham,London Reds,0,1
+31,Brighton,Manchester Red,1,0
+31,Fulham,Crystal Palace,2,2
+31,Burnley,Liverpool,0,2
+31,London Blues,Everton,3,1
+32,Spurs,Brighton,1,3
+32,Newcastle,Everton,2,0
+32,Brentford,Bournemouth,1,3
+32,Wolverhampton,Fulham,1,0
+32,Manchester Red,London Blues,5,0
+32,London Reds,Burnley,2,1
+32,Liverpool,Leeds,2,0
+32,Crystal Palace,West Ham,1,3
+32,Aston Villa,Sunderland,4,1
+32,N. Forest,Manchester Blue,0,0
+33,Burnley,Crystal Palace,1,2
+33,Manchester Blue,Fulham,2,2
+33,Sunderland,N. Forest,0,1
+33,Brighton,Brentford,3,0
+33,West Ham,Wolverhampton,1,2
+33,Leeds,London Reds,1,2
+33,London Blues,Newcastle,1,1
+33,Everton,Liverpool,2,2
+33,Manchester Red,Spurs,3,1
+33,Bournemouth,Aston Villa,3,0
+34,Aston Villa,Brighton,2,0
+34,Fulham,Sunderland,0,2
+34,Crystal Palace,Leeds,1,0
+34,Spurs,London Blues,3,1
+34,N. Forest,Bournemouth,3,1
+34,Manchester Blue,West Ham,3,1
+34,London Reds,Everton,5,0
+34,Wolverhampton,Burnley,2,1
+34,Brentford,Manchester Red,1,3
+34,Liverpool,Newcastle,1,0
+35,Newcastle,London Reds,2,1
+35,Manchester Red,Aston Villa,1,3
+35,Spurs,Brentford,1,0
+35,Everton,Crystal Palace,1,2
+35,Brighton,N. Forest,3,0
+35,Bournemouth,Fulham,2,1
+35,Sunderland,West Ham,1,3
+35,London Blues,Liverpool,1,0
+35,Leeds,Wolverhampton,1,1
+35,Burnley,Manchester Blue,1,2
+36,Manchester Blue,Leeds,2,0
+36,Aston Villa,Spurs,1,2
+36,Wolverhampton,Everton,4,2
+36,N. Forest,Manchester Red,3,0
+36,Fulham,Brighton,2,2
+36,Crystal Palace,Newcastle,0,2
+36,London Reds,Liverpool,0,3
+36,Sunderland,Burnley,2,1
+36,Brentford,London Blues,3,1
+36,West Ham,Bournemouth,1,2
+37,Manchester Red,Fulham,1,0
+37,Spurs,N. Forest,2,2
+37,London Blues,London Reds,0,2
+37,Everton,Manchester Blue,0,1
+37,Liverpool,Crystal Palace,0,0
+37,Brighton,West Ham,4,0
+37,Brentford,Aston Villa,2,0
+37,Bournemouth,Burnley,2,1
+37,Newcastle,Wolverhampton,2,0
+37,Leeds,Sunderland,1,3
+
+=== PREDICTIONS ===
+Journee,Equipe_Dom,Equipe_Ext,Prediction,Resultat,Succes,Points
+11,Leeds,Everton,1,2,0,-8
+12,Brentford,Sunderland,1,1,1,5
+13,Sunderland,Aston Villa,2,2,1,5
+13,Everton,Newcastle,2,2,1,5
+14,Aston Villa,Bournemouth,1,2,0,-8
+14,Newcastle,London Blues,1,1,1,5
+14,N. Forest,Sunderland,1,2,0,-8
+16,Liverpool,London Blues,1,X,0,-8
+16,West Ham,Sunderland,1,1,1,5
+16,Crystal Palace,Everton,1,1,1,5
+17,Manchester Red,N. Forest,1,1,1,5
+18,London Reds,London Blues,1,1,1,5
+18,Wolverhampton,Newcastle,2,2,1,5
+18,Aston Villa,Brentford,1,X,0,-8
+19,Manchester Red,West Ham,1,X,0,-8
+19,Brentford,N. Forest,1,2,0,-8
+20,Burnley,Manchester Red,2,X,0,-8
+20,Fulham,Brentford,1,1,1,5
+20,Manchester Blue,Liverpool,1,1,1,5
+21,Spurs,Burnley,1,1,1,5
+21,Manchester Red,Leeds,1,1,1,5
+21,Newcastle,Bournemouth,1,1,1,5
+22,Leeds,Spurs,2,2,1,5
+22,Fulham,N. Forest,1,1,1,5
+23,Spurs,Everton,1,2,0,-8
+23,Aston Villa,Burnley,1,1,1,5
+23,Newcastle,Manchester Red,1,1,1,5
+25,Brentford,Newcastle,2,1,0,-8
+25,Aston Villa,Everton,1,1,1,5
+26,Brighton,Wolverhampton,1,1,1,5
+26,Burnley,West Ham,2,2,1,5
+26,Liverpool,Brentford,1,1,1,5
+27,Fulham,Everton,1,1,1,5
+27,N. Forest,Newcastle,2,X,0,-8
+27,London Blues,Burnley,1,1,1,5
+28,Brighton,Sunderland,1,1,1,5
+29,N. Forest,London Reds,2,X,0,-8
+29,Wolverhampton,Brentford,2,2,1,5
+31,Fulham,Crystal Palace,1,X,0,-8
+31,Leeds,Newcastle,2,2,1,5
+31,London Blues,Everton,1,1,1,5
+32,Newcastle,Everton,1,1,1,5
+33,Brighton,Brentford,1,1,1,5
+33,London Blues,Newcastle,2,X,0,-8
+34,Fulham,Sunderland,1,2,0,-8
+35,Brighton,N. Forest,1,1,1,5
+35,Burnley,Manchester Blue,2,2,1,5
+35,Spurs,Brentford,1,1,1,5
+36,Crystal Palace,Newcastle,2,2,1,5
+36,Fulham,Brighton,2,X,0,-8
+36,Wolverhampton,Everton,1,1,1,5
+38,Aston Villa,London Blues,1,,,
+38,West Ham,Manchester Red,2,,,
+
+=== SCORE IA ===
+Score_Final,Predictions_Total,Predictions_Reussies
+181,51,35
+
+=== CLASSEMENT FINAL ===
+Equipe,Points,Forme
+Newcastle,80,VVVDN
+Brighton,73,VNVDV
+London Reds,70,VDDVV
+Aston Villa,67,DDVVD
+Liverpool,65,NVDVN
+Manchester Red,64,VDDVV
+Spurs,64,NVVVD
+Manchester Blue,63,VVVVN
+Bournemouth,55,VVVDV
+Brentford,54,VVDDD
+Fulham,51,DNDDN
+London Blues,46,DDVDN
+Crystal Palace,46,NDVVV
+West Ham,44,DDVDD
+N. Forest,41,NVDVV
+Wolverhampton,39,DVNVV
+Everton,32,DDDDN
+Leeds,32,DDNDD
+Sunderland,23,VVDVD
+Burnley,18,DDDDD
