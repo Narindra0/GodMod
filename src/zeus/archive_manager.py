@@ -25,7 +25,7 @@ def prendre_snapshot_classement(journee):
             
             # Récupérer le classement actuel (avant mise à jour)
             cursor.execute("""
-                SELECT equipe_id, position, points, forme
+                SELECT equipe_id, position, points, forme, buts_pour, buts_contre
                 FROM classement
                 WHERE journee = ?
             """, (journee,))
@@ -38,12 +38,12 @@ def prendre_snapshot_classement(journee):
             
             # Archiver chaque équipe
             archived_count = 0
-            for equipe_id, position, points, forme in classement_actuel:
+            for equipe_id, position, points, forme, bp, bc in classement_actuel:
                 cursor.execute("""
                     INSERT OR REPLACE INTO zeus_classement_archive 
-                    (journee, equipe_id, position, points, forme, timestamp)
-                    VALUES (?, ?, ?, ?, ?, ?)
-                """, (journee, equipe_id, position, points, forme, datetime.now().isoformat()))
+                    (journee, equipe_id, position, points, forme, buts_pour, buts_contre, timestamp)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                """, (journee, equipe_id, position, points, forme, bp, bc, datetime.now().isoformat()))
                 archived_count += 1
             
             logger.info(f"📸 Snapshot J{journee}: {archived_count} équipes archivées")

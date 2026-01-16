@@ -39,6 +39,17 @@ def extraire_donnees_classement(page):
     classement_data = []
     
     for idx, row in enumerate(rows, start=1):
+        # PROBE: Log columns for the first row to identify structure
+        if idx == 1:
+            try:
+                tds = row.query_selector_all("td")
+                texts = [td.inner_text().strip() for td in tds]
+                with open("logs/probe.log", "a", encoding="utf-8") as f:
+                    f.write(f"PROBE: {texts}\n")
+            except Exception as e:
+                logger.error(f"Probe error: {e}")
+
+
         try:
             team_container = row.query_selector(config.SELECTORS["ranking_team"])
             if not team_container:

@@ -1,0 +1,304 @@
+{
+  "teams": [
+    {
+      "name": "Brentford",
+      "points": 14,
+      "position": 1,
+      "history": [
+        "Draw",
+        "Won",
+        "Won",
+        "Won",
+        "Won"
+      ],
+      "won": 4,
+      "lost": 0,
+      "draw": 2
+    },
+    {
+      "name": "Fulham",
+      "points": 12,
+      "position": 2,
+      "history": [
+        "Lost",
+        "Won",
+        "Won",
+        "Lost",
+        "Won"
+      ],
+      "won": 4,
+      "lost": 2,
+      "draw": 0
+    },
+    {
+      "name": "Bournemouth",
+      "points": 11,
+      "position": 3,
+      "history": [
+        "Won",
+        "Lost",
+        "Won",
+        "Draw",
+        "Won"
+      ],
+      "won": 3,
+      "lost": 1,
+      "draw": 2
+    },
+    {
+      "name": "A. Villa",
+      "points": 10,
+      "position": 4,
+      "history": [
+        "Won",
+        "Won",
+        "Lost",
+        "Won",
+        "Draw"
+      ],
+      "won": 3,
+      "lost": 2,
+      "draw": 1
+    },
+    {
+      "name": "C. Palace",
+      "points": 10,
+      "position": 5,
+      "history": [
+        "Won",
+        "Won",
+        "Won",
+        "Lost",
+        "Draw"
+      ],
+      "won": 3,
+      "lost": 2,
+      "draw": 1
+    },
+    {
+      "name": "Leeds",
+      "points": 10,
+      "position": 6,
+      "history": [
+        "Won",
+        "Lost",
+        "Won",
+        "Draw",
+        "Lost"
+      ],
+      "won": 3,
+      "lost": 2,
+      "draw": 1
+    },
+    {
+      "name": "Manchester Red",
+      "points": 10,
+      "position": 7,
+      "history": [
+        "Lost",
+        "Lost",
+        "Won",
+        "Won",
+        "Draw"
+      ],
+      "won": 3,
+      "lost": 2,
+      "draw": 1
+    },
+    {
+      "name": "Manchester Blue",
+      "points": 9,
+      "position": 8,
+      "history": [
+        "Lost",
+        "Won",
+        "Won",
+        "Draw",
+        "Draw"
+      ],
+      "won": 2,
+      "lost": 1,
+      "draw": 3
+    },
+    {
+      "name": "London Reds",
+      "points": 9,
+      "position": 9,
+      "history": [
+        "Draw",
+        "Draw",
+        "Lost",
+        "Won",
+        "Won"
+      ],
+      "won": 2,
+      "lost": 1,
+      "draw": 3
+    },
+    {
+      "name": "N. Forest",
+      "points": 9,
+      "position": 10,
+      "history": [
+        "Won",
+        "Lost",
+        "Lost",
+        "Lost",
+        "Won"
+      ],
+      "won": 3,
+      "lost": 3,
+      "draw": 0
+    },
+    {
+      "name": "London Blues",
+      "points": 9,
+      "position": 11,
+      "history": [
+        "Draw",
+        "Won",
+        "Won",
+        "Lost",
+        "Draw"
+      ],
+      "won": 2,
+      "lost": 1,
+      "draw": 3
+    },
+    {
+      "name": "Newcastle",
+      "points": 8,
+      "position": 12,
+      "history": [
+        "Won",
+        "Draw",
+        "Draw",
+        "Won",
+        "Lost"
+      ],
+      "won": 2,
+      "lost": 2,
+      "draw": 2
+    },
+    {
+      "name": "Liverpool",
+      "points": 8,
+      "position": 13,
+      "history": [
+        "Lost",
+        "Draw",
+        "Won",
+        "Won",
+        "Lost"
+      ],
+      "won": 2,
+      "lost": 2,
+      "draw": 2
+    },
+    {
+      "name": "Brighton",
+      "points": 7,
+      "position": 14,
+      "history": [
+        "Won",
+        "Lost",
+        "Lost",
+        "Lost",
+        "Draw"
+      ],
+      "won": 2,
+      "lost": 3,
+      "draw": 1
+    },
+    {
+      "name": "Wolverhampton",
+      "points": 6,
+      "position": 15,
+      "history": [
+        "Draw",
+        "Won",
+        "Lost",
+        "Draw",
+        "Draw"
+      ],
+      "won": 1,
+      "lost": 2,
+      "draw": 3
+    },
+    {
+      "name": "Sunderland",
+      "points": 6,
+      "position": 16,
+      "history": [
+        "Lost",
+        "Lost",
+        "Lost",
+        "Won",
+        "Lost"
+      ],
+      "won": 2,
+      "lost": 4,
+      "draw": 0
+    },
+    {
+      "name": "Burnley",
+      "points": 6,
+      "position": 17,
+      "history": [
+        "Won",
+        "Won",
+        "Lost",
+        "Lost",
+        "Lost"
+      ],
+      "won": 2,
+      "lost": 4,
+      "draw": 0
+    },
+    {
+      "name": "Spurs",
+      "points": 5,
+      "position": 18,
+      "history": [
+        "Lost",
+        "Draw",
+        "Lost",
+        "Won",
+        "Draw"
+      ],
+      "won": 1,
+      "lost": 3,
+      "draw": 2
+    },
+    {
+      "name": "Everton",
+      "points": 5,
+      "position": 19,
+      "history": [
+        "Lost",
+        "Lost",
+        "Draw",
+        "Lost",
+        "Draw"
+      ],
+      "won": 1,
+      "lost": 3,
+      "draw": 2
+    },
+    {
+      "name": "West Ham",
+      "points": 1,
+      "position": 20,
+      "history": [
+        "Lost",
+        "Lost",
+        "Lost",
+        "Lost",
+        "Draw"
+      ],
+      "won": 0,
+      "lost": 5,
+      "draw": 1
+    }
+  ]
+}

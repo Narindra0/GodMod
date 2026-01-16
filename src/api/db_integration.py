@@ -109,17 +109,29 @@ def insert_api_ranking(ranking_data: List[Dict]) -> int:
             if result:
                 equipe_id = result[0]
                 
-                # Inserer le classement (plus besoin de UPDATE car on nettoie avant)
+                # CALCUL DES BUTS (Pour/Contre) depuis la table resultats
                 cursor.execute("""
-                    INSERT INTO classement (journee, equipe_id, position, points, forme)
-                    VALUES (?, ?, ?, ?, ?)
-                """, (journee, equipe_id, position, points, forme))
+                    SELECT 
+                        SUM(CASE WHEN equipe_dom_id = ? THEN score_dom ELSE score_ext END) as bp,
+                        SUM(CASE WHEN equipe_dom_id = ? THEN score_ext ELSE score_dom END) as bc
+                    FROM resultats 
+                    WHERE (equipe_dom_id = ? OR equipe_ext_id = ?) AND score_dom IS NOT NULL
+                """, (equipe_id, equipe_id, equipe_id, equipe_id))
+                stats_buts = cursor.fetchone()
+                buts_pour = stats_buts[0] if stats_buts and stats_buts[0] is not None else 0
+                buts_contre = stats_buts[1] if stats_buts and stats_buts[1] is not None else 0
+                
+                # Inserer le classement avec les stats de buts
+                cursor.execute("""
+                    INSERT INTO classement (journee, equipe_id, position, points, forme, buts_pour, buts_contre)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                """, (journee, equipe_id, position, points, forme, buts_pour, buts_contre))
                 
                 count += 1
             else:
                 logger.warning(f"Equipe '{team_name}' non trouvee dans la BDD")
     
-    logger.info(f"{count} equipes inserees dans le classement (journee {journee})")
+    logger.info(f"{count} equipes inserees dans le classement (journee {journee}) avec stats buts")
     return count
 
 

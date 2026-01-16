@@ -123,7 +123,8 @@ if __name__ == "__main__":
     ranking = get_ranking()
     if ranking:
         print(f"   [OK] {len(ranking)} equipes recuperees")
-        print(f"   [DATA] Exemple - 1ere equipe: {ranking[0].get('name', 'N/A')}")
+        print(f"   [DATA] Exemple - 1ere equipe FULL: {ranking[0]}")
+        # print(f"   [DATA] Exemple - 1ere equipe: {ranking[0].get('name', 'N/A')}")
         save_to_json({"teams": ranking}, "test_ranking.json")
     else:
         print("   ❌ Échec de la récupération")

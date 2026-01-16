@@ -568,9 +568,9 @@ def selectionner_meilleurs_matchs_ameliore(journee):
                 
                 # Récup info manquante pour vecteur (classement/forme)
                 # Note: On utilise le dernier classement disponible pour que Zeus puisse prédire les matchs futurs
-                cursor.execute("SELECT position, forme, points FROM classement WHERE equipe_id = ? ORDER BY journee DESC LIMIT 1", (dom_id,))
+                cursor.execute("SELECT position, forme, points, buts_pour, buts_contre FROM classement WHERE equipe_id = ? ORDER BY journee DESC LIMIT 1", (dom_id,))
                 d_info = cursor.fetchone()
-                cursor.execute("SELECT position, forme, points FROM classement WHERE equipe_id = ? ORDER BY journee DESC LIMIT 1", (ext_id,))
+                cursor.execute("SELECT position, forme, points, buts_pour, buts_contre FROM classement WHERE equipe_id = ? ORDER BY journee DESC LIMIT 1", (ext_id,))
                 e_info = cursor.fetchone()
 
                 if d_info and e_info:
@@ -578,10 +578,17 @@ def selectionner_meilleurs_matchs_ameliore(journee):
                      match_data = {
                          'pos_dom': d_info[0], 'pos_ext': e_info[0],
                          'forme_dom': d_info[1], 'forme_ext': e_info[1],
+                         'pts_dom': d_info[2], 'pts_ext': e_info[2],
+                         'bp_dom': d_info[3], 'bc_dom': d_info[4], # Buts Dom
+                         'bp_ext': d_info[3], 'bc_ext': d_info[4], # Buts Ext (Attention index!)
+                         # Wait, d_info[3] is bp_dom.
                          'cote_1': c1, 'cote_x': cx, 'cote_2': c2,
                          'journee': journee,
-                         # On pourrait ajouter les stats de buts ici si on veut etre precis
                      }
+                     
+                     # Correction assignment pour ext
+                     match_data['bp_ext'] = e_info[3]
+                     match_data['bc_ext'] = e_info[4]
                      
                      action = zeus_inference.predire_match(match_data)
                      

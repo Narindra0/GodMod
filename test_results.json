@@ -1,0 +1,1290 @@
+{
+  "rounds": [
+    {
+      "expectedStart": "2026-01-16T08:36:58Z",
+      "expectedEnd": "0001-01-01T00:00:00Z",
+      "roundNumber": 6,
+      "matches": [
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "London Reds vs Brentford",
+          "awayTeam": {
+            "name": "Brentford",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "London Reds",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 42,
+              "homeScore": 1.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 43,
+              "homeScore": 1.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            }
+          ],
+          "score": "1:1",
+          "halfTimeScore": "1:1",
+          "expectedStart": "2026-01-16T08:36:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Bournemouth vs Liverpool",
+          "awayTeam": {
+            "name": "Liverpool",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Bournemouth",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 35,
+              "homeScore": 1.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 39,
+              "homeScore": 1.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 73,
+              "homeScore": 2.0,
+              "awayScore": 1.0,
+              "team": "Home"
+            }
+          ],
+          "score": "2:1",
+          "halfTimeScore": "1:1",
+          "expectedStart": "2026-01-16T08:36:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Everton vs N. Forest",
+          "awayTeam": {
+            "name": "N. Forest",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Everton",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 60,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            }
+          ],
+          "score": "0:1",
+          "halfTimeScore": "0:0",
+          "expectedStart": "2026-01-16T08:36:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "West Ham vs C. Palace",
+          "awayTeam": {
+            "name": "C. Palace",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "West Ham",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 33,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 59,
+              "homeScore": 0.0,
+              "awayScore": 2.0,
+              "team": "Away"
+            }
+          ],
+          "score": "0:2",
+          "halfTimeScore": "0:1",
+          "expectedStart": "2026-01-16T08:36:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Brighton vs Fulham",
+          "awayTeam": {
+            "name": "Fulham",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Brighton",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 26,
+              "homeScore": 1.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 29,
+              "homeScore": 2.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 46,
+              "homeScore": 3.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 57,
+              "homeScore": 3.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 90,
+              "homeScore": 4.0,
+              "awayScore": 1.0,
+              "team": "Home"
+            }
+          ],
+          "score": "4:1",
+          "halfTimeScore": "2:0",
+          "expectedStart": "2026-01-16T08:36:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "London Blues vs Wolverhampton",
+          "awayTeam": {
+            "name": "Wolverhampton",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "London Blues",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 24,
+              "homeScore": 1.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 38,
+              "homeScore": 1.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            }
+          ],
+          "score": "1:1",
+          "halfTimeScore": "1:1",
+          "expectedStart": "2026-01-16T08:36:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Burnley vs Manchester Red",
+          "awayTeam": {
+            "name": "Manchester Red",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Burnley",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 28,
+              "homeScore": 1.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            }
+          ],
+          "score": "1:0",
+          "halfTimeScore": "1:0",
+          "expectedStart": "2026-01-16T08:36:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Sunderland vs Leeds",
+          "awayTeam": {
+            "name": "Leeds",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Sunderland",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 41,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            }
+          ],
+          "score": "0:1",
+          "halfTimeScore": "0:1",
+          "expectedStart": "2026-01-16T08:36:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Spurs vs Newcastle",
+          "awayTeam": {
+            "name": "Newcastle",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Spurs",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 8,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 17,
+              "homeScore": 0.0,
+              "awayScore": 2.0,
+              "team": "Away"
+            },
+            {
+              "minute": 52,
+              "homeScore": 0.0,
+              "awayScore": 3.0,
+              "team": "Away"
+            },
+            {
+              "minute": 84,
+              "homeScore": 1.0,
+              "awayScore": 3.0,
+              "team": "Home"
+            }
+          ],
+          "score": "1:3",
+          "halfTimeScore": "0:2",
+          "expectedStart": "2026-01-16T08:36:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Manchester Blue vs A. Villa",
+          "awayTeam": {
+            "name": "A. Villa",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Manchester Blue",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 4,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 43,
+              "homeScore": 0.0,
+              "awayScore": 2.0,
+              "team": "Away"
+            },
+            {
+              "minute": 67,
+              "homeScore": 0.0,
+              "awayScore": 3.0,
+              "team": "Away"
+            },
+            {
+              "minute": 83,
+              "homeScore": 0.0,
+              "awayScore": 4.0,
+              "team": "Away"
+            },
+            {
+              "minute": 90,
+              "homeScore": 0.0,
+              "awayScore": 5.0,
+              "team": "Away"
+            }
+          ],
+          "score": "0:5",
+          "halfTimeScore": "0:2",
+          "expectedStart": "2026-01-16T08:36:58Z"
+        }
+      ],
+      "id": 0,
+      "eventCategoryId": 0
+    },
+    {
+      "expectedStart": "2026-01-16T08:34:58Z",
+      "expectedEnd": "0001-01-01T00:00:00Z",
+      "roundNumber": 5,
+      "matches": [
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Brentford vs Everton",
+          "awayTeam": {
+            "name": "Everton",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Brentford",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 28,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 36,
+              "homeScore": 1.0,
+              "awayScore": 1.0,
+              "team": "Home"
+            },
+            {
+              "minute": 38,
+              "homeScore": 2.0,
+              "awayScore": 1.0,
+              "team": "Home"
+            }
+          ],
+          "score": "2:1",
+          "halfTimeScore": "2:1",
+          "expectedStart": "2026-01-16T08:34:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "A. Villa vs Sunderland",
+          "awayTeam": {
+            "name": "Sunderland",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "A. Villa",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 27,
+              "homeScore": 1.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 33,
+              "homeScore": 2.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 41,
+              "homeScore": 2.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 56,
+              "homeScore": 3.0,
+              "awayScore": 1.0,
+              "team": "Home"
+            },
+            {
+              "minute": 88,
+              "homeScore": 4.0,
+              "awayScore": 1.0,
+              "team": "Home"
+            }
+          ],
+          "score": "4:1",
+          "halfTimeScore": "2:1",
+          "expectedStart": "2026-01-16T08:34:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Wolverhampton vs Brighton",
+          "awayTeam": {
+            "name": "Brighton",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Wolverhampton",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 26,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 74,
+              "homeScore": 1.0,
+              "awayScore": 1.0,
+              "team": "Home"
+            },
+            {
+              "minute": 78,
+              "homeScore": 2.0,
+              "awayScore": 1.0,
+              "team": "Home"
+            }
+          ],
+          "score": "2:1",
+          "halfTimeScore": "0:1",
+          "expectedStart": "2026-01-16T08:34:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Newcastle vs London Reds",
+          "awayTeam": {
+            "name": "London Reds",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Newcastle",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [],
+          "score": "0:0",
+          "halfTimeScore": "0:0",
+          "expectedStart": "2026-01-16T08:34:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "C. Palace vs Bournemouth",
+          "awayTeam": {
+            "name": "Bournemouth",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "C. Palace",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 5,
+              "homeScore": 1.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 7,
+              "homeScore": 2.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 9,
+              "homeScore": 2.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 58,
+              "homeScore": 3.0,
+              "awayScore": 1.0,
+              "team": "Home"
+            },
+            {
+              "minute": 77,
+              "homeScore": 3.0,
+              "awayScore": 2.0,
+              "team": "Away"
+            },
+            {
+              "minute": 86,
+              "homeScore": 4.0,
+              "awayScore": 2.0,
+              "team": "Home"
+            }
+          ],
+          "score": "4:2",
+          "halfTimeScore": "2:1",
+          "expectedStart": "2026-01-16T08:34:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "West Ham vs Burnley",
+          "awayTeam": {
+            "name": "Burnley",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "West Ham",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 89,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            }
+          ],
+          "score": "0:1",
+          "halfTimeScore": "0:0",
+          "expectedStart": "2026-01-16T08:34:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Leeds vs London Blues",
+          "awayTeam": {
+            "name": "London Blues",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Leeds",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 17,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 33,
+              "homeScore": 1.0,
+              "awayScore": 1.0,
+              "team": "Home"
+            },
+            {
+              "minute": 57,
+              "homeScore": 1.0,
+              "awayScore": 2.0,
+              "team": "Away"
+            }
+          ],
+          "score": "1:2",
+          "halfTimeScore": "1:1",
+          "expectedStart": "2026-01-16T08:34:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Manchester Red vs Manchester Blue",
+          "awayTeam": {
+            "name": "Manchester Blue",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Manchester Red",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 10,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 16,
+              "homeScore": 0.0,
+              "awayScore": 2.0,
+              "team": "Away"
+            },
+            {
+              "minute": 88,
+              "homeScore": 0.0,
+              "awayScore": 3.0,
+              "team": "Away"
+            }
+          ],
+          "score": "0:3",
+          "halfTimeScore": "0:2",
+          "expectedStart": "2026-01-16T08:34:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Liverpool vs Spurs",
+          "awayTeam": {
+            "name": "Spurs",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Liverpool",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [],
+          "score": "0:0",
+          "halfTimeScore": "0:0",
+          "expectedStart": "2026-01-16T08:34:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Fulham vs N. Forest",
+          "awayTeam": {
+            "name": "N. Forest",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Fulham",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 37,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 74,
+              "homeScore": 1.0,
+              "awayScore": 1.0,
+              "team": "Home"
+            },
+            {
+              "minute": 88,
+              "homeScore": 2.0,
+              "awayScore": 1.0,
+              "team": "Home"
+            }
+          ],
+          "score": "2:1",
+          "halfTimeScore": "0:1",
+          "expectedStart": "2026-01-16T08:34:58Z"
+        }
+      ],
+      "id": 0,
+      "eventCategoryId": 0
+    },
+    {
+      "expectedStart": "2026-01-16T08:32:58Z",
+      "expectedEnd": "0001-01-01T00:00:00Z",
+      "roundNumber": 4,
+      "matches": [
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Manchester Blue vs West Ham",
+          "awayTeam": {
+            "name": "West Ham",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Manchester Blue",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 34,
+              "homeScore": 1.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 48,
+              "homeScore": 2.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 67,
+              "homeScore": 3.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 88,
+              "homeScore": 4.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            }
+          ],
+          "score": "4:0",
+          "halfTimeScore": "1:0",
+          "expectedStart": "2026-01-16T08:32:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Spurs vs C. Palace",
+          "awayTeam": {
+            "name": "C. Palace",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Spurs",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 23,
+              "homeScore": 1.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 33,
+              "homeScore": 2.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 50,
+              "homeScore": 2.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 56,
+              "homeScore": 2.0,
+              "awayScore": 2.0,
+              "team": "Away"
+            },
+            {
+              "minute": 70,
+              "homeScore": 2.0,
+              "awayScore": 3.0,
+              "team": "Away"
+            }
+          ],
+          "score": "2:3",
+          "halfTimeScore": "2:0",
+          "expectedStart": "2026-01-16T08:32:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Bournemouth vs Burnley",
+          "awayTeam": {
+            "name": "Burnley",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Bournemouth",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 52,
+              "homeScore": 1.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 68,
+              "homeScore": 2.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 87,
+              "homeScore": 2.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            }
+          ],
+          "score": "2:1",
+          "halfTimeScore": "0:0",
+          "expectedStart": "2026-01-16T08:32:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "London Blues vs A. Villa",
+          "awayTeam": {
+            "name": "A. Villa",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "London Blues",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 46,
+              "homeScore": 1.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            }
+          ],
+          "score": "1:0",
+          "halfTimeScore": "0:0",
+          "expectedStart": "2026-01-16T08:32:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Wolverhampton vs Fulham",
+          "awayTeam": {
+            "name": "Fulham",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Wolverhampton",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 12,
+              "homeScore": 1.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 72,
+              "homeScore": 1.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 79,
+              "homeScore": 1.0,
+              "awayScore": 2.0,
+              "team": "Away"
+            }
+          ],
+          "score": "1:2",
+          "halfTimeScore": "1:0",
+          "expectedStart": "2026-01-16T08:32:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Brighton vs Leeds",
+          "awayTeam": {
+            "name": "Leeds",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Brighton",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 25,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 85,
+              "homeScore": 0.0,
+              "awayScore": 2.0,
+              "team": "Away"
+            }
+          ],
+          "score": "0:2",
+          "halfTimeScore": "0:1",
+          "expectedStart": "2026-01-16T08:32:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Everton vs Newcastle",
+          "awayTeam": {
+            "name": "Newcastle",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Everton",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 11,
+              "homeScore": 1.0,
+              "awayScore": 0.0,
+              "team": "Home"
+            },
+            {
+              "minute": 38,
+              "homeScore": 1.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            }
+          ],
+          "score": "1:1",
+          "halfTimeScore": "1:1",
+          "expectedStart": "2026-01-16T08:32:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "N. Forest vs Brentford",
+          "awayTeam": {
+            "name": "Brentford",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "N. Forest",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 31,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            }
+          ],
+          "score": "0:1",
+          "halfTimeScore": "0:1",
+          "expectedStart": "2026-01-16T08:32:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "Sunderland vs Manchester Red",
+          "awayTeam": {
+            "name": "Manchester Red",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "Sunderland",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 38,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            },
+            {
+              "minute": 44,
+              "homeScore": 0.0,
+              "awayScore": 2.0,
+              "team": "Away"
+            },
+            {
+              "minute": 63,
+              "homeScore": 1.0,
+              "awayScore": 2.0,
+              "team": "Home"
+            },
+            {
+              "minute": 63,
+              "homeScore": 1.0,
+              "awayScore": 3.0,
+              "team": "Away"
+            },
+            {
+              "minute": 76,
+              "homeScore": 2.0,
+              "awayScore": 3.0,
+              "team": "Home"
+            }
+          ],
+          "score": "2:3",
+          "halfTimeScore": "0:2",
+          "expectedStart": "2026-01-16T08:32:58Z"
+        },
+        {
+          "id": 0,
+          "entryPointId": 0,
+          "name": "London Reds vs Liverpool",
+          "awayTeam": {
+            "name": "Liverpool",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "homeTeam": {
+            "name": "London Reds",
+            "points": 0,
+            "position": 0,
+            "won": 0,
+            "lost": 0,
+            "draw": 0
+          },
+          "goals": [
+            {
+              "minute": 25,
+              "homeScore": 0.0,
+              "awayScore": 1.0,
+              "team": "Away"
+            }
+          ],
+          "score": "0:1",
+          "halfTimeScore": "0:1",
+          "expectedStart": "2026-01-16T08:32:58Z"
+        }
+      ],
+      "id": 0,
+      "eventCategoryId": 0
+    }
+  ],
+  "hasMore": true
+}
