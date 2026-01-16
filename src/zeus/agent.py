@@ -75,6 +75,35 @@ class ZeusAgent:
         action, _states = self.model.predict(observation, deterministic=deterministic)
         return int(action)
 
+    def predict_with_confidence(self, observation, deterministic=True):
+        """
+        Predit l'action avec un score de confiance.
+        Supporte uniquement PPO pour l'instant.
+        """
+        if not self.model:
+            logger.error("Modèle non chargé !")
+            return 3, 0.0
+            
+        action, _ = self.model.predict(observation, deterministic=deterministic)
+        confidence = 0.0
+        
+        try:
+            if self.algo == "PPO":
+                # Extraction des probabilités pour PPO (Categorical)
+                import torch as th
+                obs_tensor = self.model.policy.obs_to_tensor(observation)[0]
+                distribution = self.model.policy.get_distribution(obs_tensor)
+                probs = distribution.distribution.probs
+                confidence = float(probs[0][action].item())
+            elif self.algo == "DQN":
+                # Pour DQN, on peut estimer via Q-values mais c'est moins standard
+                # On retourne 1.0 par défaut ou une heuristique
+                confidence = 1.0 
+        except Exception as e:
+            logger.warning(f"Impossible de calculer confiance: {e}")
+            
+        return int(action), confidence
+
 if __name__ == "__main__":
     # Test simple
     agent = ZeusAgent()

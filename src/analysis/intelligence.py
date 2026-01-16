@@ -568,29 +568,35 @@ def selectionner_meilleurs_matchs_ameliore(journee):
                 
                 # Récup info manquante pour vecteur (classement/forme)
                 # Note: On utilise le dernier classement disponible pour que Zeus puisse prédire les matchs futurs
-                cursor.execute("SELECT position, forme, points, buts_pour, buts_contre FROM classement WHERE equipe_id = ? ORDER BY journee DESC LIMIT 1", (dom_id,))
+                # On recupere aussi la JOURNEE du classement pour normaliser les buts (Moyenne par match)
+                cursor.execute("SELECT position, forme, points, buts_pour, buts_contre, journee FROM classement WHERE equipe_id = ? ORDER BY journee DESC LIMIT 1", (dom_id,))
                 d_info = cursor.fetchone()
-                cursor.execute("SELECT position, forme, points, buts_pour, buts_contre FROM classement WHERE equipe_id = ? ORDER BY journee DESC LIMIT 1", (ext_id,))
+                cursor.execute("SELECT position, forme, points, buts_pour, buts_contre, journee FROM classement WHERE equipe_id = ? ORDER BY journee DESC LIMIT 1", (ext_id,))
                 e_info = cursor.fetchone()
 
                 if d_info and e_info:
+                     # Normalisation des buts (Total -> Moyenne)
+                     j_d = d_info[5] if d_info[5] > 0 else 1
+                     j_e = e_info[5] if e_info[5] > 0 else 1
+                     
+                     bp_dom_avg = d_info[3] / j_d
+                     bc_dom_avg = d_info[4] / j_d
+                     bp_ext_avg = e_info[3] / j_e
+                     bc_ext_avg = e_info[4] / j_e
+
                      # On construit l'objet data pour Zeus
                      match_data = {
                          'pos_dom': d_info[0], 'pos_ext': e_info[0],
                          'forme_dom': d_info[1], 'forme_ext': e_info[1],
                          'pts_dom': d_info[2], 'pts_ext': e_info[2],
-                         'bp_dom': d_info[3], 'bc_dom': d_info[4], # Buts Dom
-                         'bp_ext': d_info[3], 'bc_ext': d_info[4], # Buts Ext (Attention index!)
-                         # Wait, d_info[3] is bp_dom.
+                         'bp_dom': bp_dom_avg, 'bc_dom': bc_dom_avg,
+                         'bp_ext': bp_ext_avg, 'bc_ext': bc_ext_avg,
                          'cote_1': c1, 'cote_x': cx, 'cote_2': c2,
                          'journee': journee,
                      }
                      
-                     # Correction assignment pour ext
-                     match_data['bp_ext'] = e_info[3]
-                     match_data['bc_ext'] = e_info[4]
-                     
-                     action = zeus_inference.predire_match(match_data)
+                     # Appel avec recuperation de la CONFIANCE
+                     action, confidence = zeus_inference.predire_match(match_data)
                      
                      # Traduction action -> texte
                      labels = {0: "1", 1: "X", 2: "2", 3: "SKIP"}
@@ -598,14 +604,18 @@ def selectionner_meilleurs_matchs_ameliore(journee):
                      
                      # Log console si intéressant
                      if action != 3:
-                         print(f"   [ZEUS] Zeus conseille : {pred_zeus} pour {dom_id} vs {ext_id}")
+                         print(f"   [ZEUS] Zeus conseille : {pred_zeus} ({confidence*100:.1f}%) pour {dom_id} vs {ext_id}")
                      
-                     # Sauvegarde DB
+                     # Sauvegarde DB avec Confiance (REPLACE pour mettre a jour les SKIPs existants)
                      try:
+                         # Ajout timestamp pour debug
+                         from datetime import datetime
+                         ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                         
                          conn.execute('''
-                            INSERT OR IGNORE INTO zeus_predictions (journee, equipe_dom_id, equipe_ext_id, prediction)
-                            VALUES (?, ?, ?, ?)
-                         ''', (journee, dom_id, ext_id, action))
+                            INSERT OR REPLACE INTO zeus_predictions (journee, equipe_dom_id, equipe_ext_id, prediction, confiance, timestamp)
+                            VALUES (?, ?, ?, ?, ?, ?)
+                         ''', (journee, dom_id, ext_id, action, confidence, ts))
                      except Exception as sub_e:
                          pass # Ignorer doublons unique
     except Exception as e:

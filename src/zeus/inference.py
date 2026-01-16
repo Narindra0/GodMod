@@ -41,8 +41,10 @@ def predire_match(match_data):
         obs = feature_engineering.construire_vecteur_etat(match_data)
         
         # Prédiction
-        action = agent.predict(obs, deterministic=True)
-        return action
+        action, confidence = agent.predict_with_confidence(obs, deterministic=True)
+        return action, confidence
     except Exception as e:
         logger.error(f"Zeus: Erreur prédiction: {e}")
-        return 3 # Skip en cas d'erreur
+        return 3, 0.0 # Skip en cas d'erreur
+
+
