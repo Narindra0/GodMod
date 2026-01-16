@@ -82,7 +82,11 @@ def load_all_data():
         
         # Résultats réels (tous les matchs pour pagination)
         df_results = pd.read_sql_query("""
-            SELECT r.journee as J, e1.nom as Domicile, r.score_dom || ' - ' || r.score_ext as Score, e2.nom as Exterieur
+            SELECT 
+                r.journee as J, 
+                e1.nom as Domicile, 
+                COALESCE(r.score_dom, '?') || ' - ' || COALESCE(r.score_ext, '?') as Score, 
+                e2.nom as Exterieur
             FROM resultats r
             JOIN equipes e1 ON r.equipe_dom_id = e1.id
             JOIN equipes e2 ON r.equipe_ext_id = e2.id

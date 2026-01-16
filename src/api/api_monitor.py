@@ -361,6 +361,27 @@ def start_monitoring(callback_on_new_journee=None, verbose=True):
                     timestamp = datetime.now().strftime("%H:%M:%S")
                     print(f"[{timestamp}] [INFO] Surveillance... (BDD: J{last_journee_db}, API: J{api_journee})", end='\r')
                 
+                # --- NOUVEAU : VERIFICATION PROACTIVE DES COTES ---
+                # Si on a des resultats, on veut s'assurer d'avoir les cotes pour la journee suivante
+                if api_journee:
+                    next_j = api_journee + 1
+                    with get_db_connection() as conn:
+                        cursor = conn.cursor()
+                        cursor.execute("SELECT COUNT(*) FROM cotes WHERE journee = ?", (next_j,))
+                        has_cotes = cursor.fetchone()[0] > 0
+                        
+                    if not has_cotes:
+                        # On tente de recuperer les cotes sans attendre la prochaine journee
+                        try:
+                            matches_raw = get_upcoming_matches()
+                            matches_filtered = extract_matches_with_local_ids(matches_raw, limit=2)
+                            if matches_filtered:
+                                count = insert_api_matches(matches_filtered)
+                                if count > 0:
+                                    logger.info(f"[MONITOR] Cotes pour J{next_j} recuperees proactivement")
+                        except Exception as e:
+                            pass # On reessayera au prochain tour
+                
                 # Attendre avant prochain check
                 time.sleep(MONITOR_CONFIG['POLL_INTERVAL'])
                 

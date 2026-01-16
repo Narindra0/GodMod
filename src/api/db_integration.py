@@ -161,14 +161,18 @@ def insert_api_results(results_data: List[Dict]) -> int:
                 away_team = normalize_team_name(match.get("awayTeam"))
                 score = match.get("score", "")
                 
-                # Parser le score (format "2:1")
-                if score and ":" in score:
-                    parts = score.split(":")
-                    score_dom = int(parts[0])
-                    score_ext = int(parts[1])
-                else:
-                    score_dom = None
-                    score_ext = None
+                # Parser le score (format "2:1" ou "2-1")
+                score_dom, score_ext = None, None
+                if score:
+                    # Remplacement flexible du séparateur
+                    s_clean = score.replace(':', '-').replace(' ', '')
+                    if '-' in s_clean:
+                        try:
+                            parts = s_clean.split("-")
+                            score_dom = int(parts[0])
+                            score_ext = int(parts[1])
+                        except (ValueError, IndexError):
+                            logger.warning(f"Format de score invalide : {score}")
                 
                 # Recuperer les IDs des equipes
                 cursor.execute("SELECT id FROM equipes WHERE nom = ?", (home_team,))
@@ -257,7 +261,8 @@ def insert_api_matches(matches_data: List[Dict]) -> int:
                     
                     count += 1
                 else:
-                    logger.warning(f"Equipes non trouvees: {home_team} vs {away_team}")
+                    logger.warning(f"Equipes non trouvees: '{home_team}' ou '{away_team}'")
+                    print(f"   [WARN] Equipes non trouvees dans BDD: '{home_team}' ou '{away_team}'")
     
     logger.info(f"{count} matchs a venir inseres avec leurs cotes")
     return count

@@ -79,14 +79,16 @@ def extract_matches_with_local_ids(data: Dict, limit: int = 1) -> List[Dict]:
         for local_id, m in enumerate(r.get("matches", []), start=1):
             odds = []
             
-            # Extraction des cotes 1X2
+            # Extraction des cotes 1X2 (Noms possibles: 1X2, Winner, Match Winner, Match Result)
             for bet_type in m.get("eventBetTypes", []):
-                if bet_type.get("name") == "1X2":
+                bt_name = bet_type.get("name")
+                if bt_name in ["1X2", "Winner", "Match Winner", "Match Result"]:
                     for item in bet_type.get("eventBetTypeItems", []):
                         odds.append({
                             "type": item.get("shortName"),
                             "odds": item.get("odds")
                         })
+                    if odds: break # On a trouvé le bon bloc
             
             clean_match = {
                 "matchId": local_id,   # ID LOCAL

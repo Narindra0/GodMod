@@ -143,4 +143,23 @@ def main():
         time.sleep(1)
 
 if __name__ == "__main__":
+    # Securite Render : Si on tente de lancer ce script via Streamlit
+    if 'streamlit' in sys.modules or 'STREAMLIT_SERVER_PORT' in os.environ:
+        try:
+            import streamlit as st
+            st.error("🛑 **ERREUR DE CONFIGURATION RENDER**")
+            st.warning("Vous essayez de lancer `main.py` au lieu de `dashboard_ui.py`.")
+            st.markdown("""
+            ### Comment corriger :
+            1. Allez dans le **Dashboard Render**.
+            2. Allez dans **Settings**.
+            3. Cherchez **Start Command**.
+            4. Remplacez `streamlit run main.py` par :
+            """)
+            st.code("streamlit run dashboard_ui.py --server.port $PORT")
+            st.info("Une fois cette modification faite, l'interface GODMOD s'affichera correctement.")
+            st.stop()
+        except ImportError:
+            pass
+            
     main()
