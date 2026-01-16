@@ -159,10 +159,10 @@ with col_left:
         current_journee = df_results['J'].max() if not df_results.empty else 0
         current_journee += 1
         
-        if current_journee < 4:
-            st.warning("Pronostic pas encore disponible : pas encore assez de données (J < 4).")
+        if current_journee < 2:
+            st.warning("Pronostic pas encore disponible : pas encore assez de données (J < 2).")
         elif current_journee < 10:
-            st.markdown("## <span style='color:red'>🚩 Prise de risque (J4-J9)</span>", unsafe_allow_html=True)
+            st.markdown("## <span style='color:red'>🚩 Prise de risque (J2-J9)</span>", unsafe_allow_html=True)
             st.info("Algorithme simplifié activé. Prudence requise.")
         else:
             st.subheader("Analyses en cours")

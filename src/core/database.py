@@ -129,6 +129,23 @@ def initialiser_db():
         )
     ''')
     
+    # 8. Table d'archive du classement pour ZEUS (Mémoire Photographique)
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS zeus_classement_archive (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            journee INTEGER NOT NULL,
+            equipe_id INTEGER NOT NULL,
+            position INTEGER NOT NULL,
+            points INTEGER NOT NULL,
+            forme TEXT,
+            buts_pour DECIMAL(4,2) DEFAULT 0,
+            buts_contre DECIMAL(4,2) DEFAULT 0,
+            timestamp TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (equipe_id) REFERENCES equipes(id),
+            UNIQUE(journee, equipe_id)
+        )
+    ''')
+    
     # --- IMPORTANT : Initialisation des données de base ---
     
     # 1. Insérer les équipes si elles n'existent pas
@@ -156,7 +173,7 @@ def initialiser_db():
     
     conn.commit()
     conn.close()
-    logger.info(f"{len(indexes)} index créés avec succès.")
+    logger.info(f"{len(indexes)} index crees avec succes.")
     print(f"Base de donnees '{config.DB_NAME}' mise a jour (Structure v2 avec index optimises).")
 if __name__ == "__main__":
     initialiser_db()

@@ -108,11 +108,19 @@ def extraire_donnees_cotes(page):
                     away_id = utils.get_equipe_id(found_away_name, conn)
                     
                     if home_id and away_id:
+                        # 1. Insertion dans la table COTES (Comportement actuel)
                         cursor.execute('''
                             INSERT INTO cotes (journee, equipe_dom_id, equipe_ext_id, cote_1, cote_x, cote_2)
                             VALUES (?, ?, ?, ?, ?, ?)
                         ''', (journee, home_id, away_id, c1, cx, c2))
                         cotes_ajoutees += 1
+                        
+                        # 2. Insertion dans la table RESULTATS (Nouveau : Matchs à venir = NULL)
+                        # On utilise INSERT OR IGNORE pour ne pas écraser si le match existe déjà (avec ou sans score)
+                        cursor.execute('''
+                            INSERT OR IGNORE INTO resultats (journee, equipe_dom_id, equipe_ext_id, score_dom, score_ext)
+                            VALUES (?, ?, ?, NULL, NULL)
+                        ''', (journee, home_id, away_id))
                     else:
                         logger.warning(f"Echec ID pour : {found_home_name} ({home_id}) ou {found_away_name} ({away_id})")
         except Exception as e:

@@ -5,8 +5,8 @@ Teste les nouvelles fonctions sans modifier les données existantes.
 import sys
 import os
 
-# Ajouter le répertoire parent au path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Ajouter le répertoire racine du projet au path (remonter 2 niveaux: integration -> tests -> racine)
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 from src.analysis.intelligence import (
     pondere_forme_amelioree,

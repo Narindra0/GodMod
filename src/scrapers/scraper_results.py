@@ -140,8 +140,12 @@ def extraire_donnees_resultats(page):
                     
                     if home_id and away_id:
                         cursor.execute('''
-                            INSERT OR IGNORE INTO resultats (journee, equipe_dom_id, equipe_ext_id, score_dom, score_ext)
+                        # Utilisation de UPSERT (On Conflict Update) pour mettre à jour les matchs qui étaient en attente (NULL)
+                        cursor.execute('''
+                            INSERT INTO resultats (journee, equipe_dom_id, equipe_ext_id, score_dom, score_ext)
                             VALUES (?, ?, ?, ?, ?)
+                            ON CONFLICT(journee, equipe_dom_id, equipe_ext_id) 
+                            DO UPDATE SET score_dom=excluded.score_dom, score_ext=excluded.score_ext
                         ''', (journee_num, home_id, away_id, score_home, score_away))
                         
                         if cursor.rowcount > 0:

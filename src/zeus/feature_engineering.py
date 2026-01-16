@@ -1,5 +1,18 @@
 import numpy as np
 
+def get_stats_manquantes(match_data):
+    """
+    Fournit des valeurs par défaut intelligentes pour les stats manquantes.
+    Basé sur les moyennes réelles du football français Ligue 1.
+    """
+    return {
+        # Moyennes Ligue 1 : ~1.4 buts marqués domicile, ~1.1 encaissés
+        'bp_dom': match_data.get('bp_dom', 1.4),  # Buts pour domicile
+        'bc_dom': match_data.get('bc_dom', 1.1),  # Buts contre domicile
+        'bp_ext': match_data.get('bp_ext', 1.1),  # Buts pour extérieur
+        'bc_ext': match_data.get('bc_ext', 1.4),  # Buts contre extérieur
+    }
+
 def safe_float(value, default=0.0):
     try:
         return float(value)
@@ -113,8 +126,9 @@ def construire_vecteur_etat(match_data):
     # "Vitesse de Forme" interprétée comme différentiel
     diff_forme = forme_dom_score - forme_ext_score
     
-    bp_dom, bc_dom = normaliser_stats_buts(match_data.get('bp_dom', 0), match_data.get('bc_dom', 0))
-    bp_ext, bc_ext = normaliser_stats_buts(match_data.get('bp_ext', 0), match_data.get('bc_ext', 0))
+    stats = get_stats_manquantes(match_data)
+    bp_dom, bc_dom = normaliser_stats_buts(stats['bp_dom'], stats['bc_dom'])
+    bp_ext, bc_ext = normaliser_stats_buts(stats['bp_ext'], stats['bc_ext'])
     
     p1, px, p2 = normaliser_cotes(match_data.get('cote_1'), match_data.get('cote_x'), match_data.get('cote_2'))
     

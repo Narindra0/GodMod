@@ -5,6 +5,7 @@ import logging
 from gymnasium import spaces
 from src.core import database
 from src.zeus import feature_engineering
+from src.zeus.archive_manager import get_classement_archive
 
 logger = logging.getLogger(__name__)
 
@@ -39,17 +40,13 @@ class ZeusEnv(gym.Env):
         # Ici c'est pour l'entraînement offline sur historique.
         query = """
             SELECT 
-                r.id, r.journee, r.score_dom, r.score_ext,
+                c.journee, c.equipe_dom_id, c.equipe_ext_id,
                 c.cote_1, c.cote_x, c.cote_2,
-                cl_dom.position as pos_dom, cl_dom.forme as forme_dom, cl_dom.points as pts_dom,
-                cl_ext.position as pos_ext, cl_ext.forme as forme_ext, cl_ext.points as pts_ext
-                -- On pourrait ajouter les stats de buts ici si dispo dans classement ou calculé
-            FROM resultats r
-            LEFT JOIN cotes c ON r.journee = c.journee AND r.equipe_dom_id = c.equipe_dom_id AND r.equipe_ext_id = c.equipe_ext_id
-            LEFT JOIN classement cl_dom ON r.journee = cl_dom.journee AND r.equipe_dom_id = cl_dom.equipe_id
-            LEFT JOIN classement cl_ext ON r.journee = cl_ext.journee AND r.equipe_ext_id = cl_ext.equipe_id
-            WHERE r.score_dom IS NOT NULL  -- Seulement les matchs joués
-            ORDER BY r.journee ASC, r.id ASC
+                r.score_dom, r.score_ext  -- NULL si match non joué
+            FROM cotes c
+            LEFT JOIN resultats r ON c.journee = r.journee AND c.equipe_dom_id = r.equipe_dom_id AND c.equipe_ext_id = r.equipe_ext_id
+            WHERE c.journee >= 1  -- Toutes les journées disponibles
+            ORDER BY c.journee DESC, c.equipe_dom_id ASC
         """
         try:
             with database.get_db_connection() as conn:
@@ -88,22 +85,55 @@ class ZeusEnv(gym.Env):
         
         obs = self._get_observation() if not terminated else np.zeros(10, dtype=np.float32)
         
-        return obs, reward, terminated, truncated, {"match_id": match['id']}
+        return obs, reward, terminated, truncated, {"match_id": match.get('equipe_dom_id', 0)}
 
     def _get_observation(self):
         if self.current_step >= len(self.matches):
             return np.zeros(10, dtype=np.float32)
             
         match = self.matches[self.current_step]
-        # Mapper les données DB vers le format attendu par feature_engineering
-        # Attention: feature_engineering attend bp_dom, bc_dom etc. 
-        # Si on ne les a pas dans la requête SQL ci-dessus, il faut les ajouter ou simuler
-        # Pour l'instant on passe ce qu'on a.
         
-        # TODO: Améliorer la requête SQL pour avoir les stats Buts Pour/Contre (Moyenne)
-        # Pour une V1, on met 0 par défaut si manquant.
+        # Récupérer le classement archivé pour cette journée
+        journee = match.get('journee')
+        dom_id = match.get('equipe_dom_id')
+        ext_id = match.get('equipe_ext_id')
         
-        return feature_engineering.construire_vecteur_etat(match)
+        # Cloner les données du match et ajouter le classement archivé
+        match_data = dict(match)
+        
+        # Ajouter les données du classement depuis l'archive
+        classement_dom = get_classement_archive(journee, dom_id)
+        classement_ext = get_classement_archive(journee, ext_id)
+        
+        if classement_dom:
+            match_data['pos_dom'] = classement_dom[1]  # position
+            match_data['forme_dom'] = classement_dom[3]  # forme
+            match_data['pts_dom'] = classement_dom[2]  # points
+            match_data['bp_dom'] = classement_dom[4] or 1.4  # buts_pour
+            match_data['bc_dom'] = classement_dom[5] or 1.1  # buts_contre
+        else:
+            # Valeurs par défaut si pas d'archive
+            match_data['pos_dom'] = 10
+            match_data['forme_dom'] = 'VVNDD'
+            match_data['pts_dom'] = 30
+            match_data['bp_dom'] = 1.4
+            match_data['bc_dom'] = 1.1
+            
+        if classement_ext:
+            match_data['pos_ext'] = classement_ext[1]  # position
+            match_data['forme_ext'] = classement_ext[3]  # forme
+            match_data['pts_ext'] = classement_ext[2]  # points
+            match_data['bp_ext'] = classement_ext[4] or 1.1  # buts_pour
+            match_data['bc_ext'] = classement_ext[5] or 1.4  # buts_contre
+        else:
+            # Valeurs par défaut si pas d'archive
+            match_data['pos_ext'] = 10
+            match_data['forme_ext'] = 'VVNDD'
+            match_data['pts_ext'] = 30
+            match_data['bp_ext'] = 1.1
+            match_data['bc_ext'] = 1.4
+        
+        return feature_engineering.construire_vecteur_etat(match_data)
 
     def is_risky_match(self, match):
         """
@@ -146,6 +176,14 @@ class ZeusEnv(gym.Env):
         """
         s_dom = match['score_dom']
         s_ext = match['score_ext']
+
+        # SCENARIO B : Match à venir (Score = None)
+        # On ne peut pas savoir si l'IA a gagné ou perdu.
+        if s_dom is None or s_ext is None:
+            if action == 3: # Skip prudent
+                return 1 # Petite récompense pour la prudence
+            else:
+                return 0 # Neutre pour les paris (on ne sait pas encore)
         
         # Déterminer le vrai résultat
         if s_dom > s_ext:

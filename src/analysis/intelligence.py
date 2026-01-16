@@ -166,14 +166,14 @@ def calculer_probabilite_amelioree(equipe_dom_id, equipe_ext_id, cote_1, cote_x,
     
     # REJET 1 : Instabilité détectée (patterns VDV, DVD, etc.)
     if detecter_instabilite(forme_dom) or detecter_instabilite(forme_ext):
-        logger.info(f"🚫 Match REJETÉ (Instabilité) : {equipe_dom_id} vs {equipe_ext_id}")
-        logger.info(f"   ↳ Forme Domicile: {forme_dom}, Forme Extérieur: {forme_ext}")
+        logger.info(f"[REJET] Match REJETÉ (Instabilité) : {equipe_dom_id} vs {equipe_ext_id}")
+        logger.info(f"   -> Forme Domicile: {forme_dom}, Forme Extérieur: {forme_ext}")
         return None, 0
     
     # REJET 2 : Match équilibré (triple cote proche)
     if detecter_match_equilibre(cote_1, cote_x, cote_2):
-        logger.info(f"🚫 Match REJETÉ (Équilibre excessif) : {equipe_dom_id} vs {equipe_ext_id}")
-        logger.info(f"   ↳ Cotes: {cote_1:.2f} - {cote_x:.2f} - {cote_2:.2f}")
+        logger.info(f"[REJET] Match REJETÉ (Équilibre excessif) : {equipe_dom_id} vs {equipe_ext_id}")
+        logger.info(f"   -> Cotes: {cote_1:.2f} - {cote_x:.2f} - {cote_2:.2f}")
         return None, 0
     
     # === BONUS/MALUS ADDITIONNELS ===
@@ -183,8 +183,8 @@ def calculer_probabilite_amelioree(equipe_dom_id, equipe_ext_id, cote_1, cote_x,
     
     # REJET 3 : Historique très défavorable
     if bonus_pattern <= -2.5:
-        logger.info(f"🚫 Match REJETÉ (Historique défavorable) : {equipe_dom_id} vs {equipe_ext_id}")
-        logger.info(f"   ↳ Pattern historique: {bonus_pattern:.2f}")
+        logger.info(f"[REJET] Match REJETÉ (Historique défavorable) : {equipe_dom_id} vs {equipe_ext_id}")
+        logger.info(f"   -> Pattern historique: {bonus_pattern:.2f}")
         return None, 0
     
     # 6. ANALYSE DES COTES (détection des pièges)
@@ -192,7 +192,7 @@ def calculer_probabilite_amelioree(equipe_dom_id, equipe_ext_id, cote_1, cote_x,
     
     # REJET 4 : Piège à cotes (favori évident)
     if bonus_cotes <= -3.0:
-        logger.info(f"🚫 Match REJETÉ (Piège à cotes) : {equipe_dom_id} vs {equipe_ext_id} (Cote: {cote_1 if cote_1 < cote_2 else cote_2})")
+        logger.info(f"[REJET] Match REJETÉ (Piège à cotes) : {equipe_dom_id} vs {equipe_ext_id} (Cote: {cote_1 if cote_1 < cote_2 else cote_2})")
         return None, 0
     
     # 7. MOMENTUM (séries de victoires/défaites)
@@ -216,7 +216,7 @@ def calculer_probabilite_amelioree(equipe_dom_id, equipe_ext_id, cote_1, cote_x,
         return "X", abs(score_final)
     else:
         # Zone d'incertitude (3.0 < |score| < 7.0) : REJET
-        logger.info(f"🚫 Match REJETÉ (Zone d'incertitude : score {score_final:.2f})")
+        logger.info(f"[REJET] Match REJETÉ (Zone d'incertitude : score {score_final:.2f})")
         return None, 0
 
 
@@ -270,8 +270,8 @@ def selectionner_meilleurs_matchs(journee):
     
     # Si une pause est active
     if pause_until >= journee:
-        print(f"🛑 MODE RENFORCEMENT ACTIF (J{journee}). Pause jusqu'à la journée {pause_until + 1}.")
-        print("   ↳ Le programme continue de scanner les données sans faire de pronostics.")
+        print(f"[STOP] MODE RENFORCEMENT ACTIF (J{journee}). Pause jusqu'à la journée {pause_until + 1}.")
+        print("   -> Le programme continue de scanner les données sans faire de pronostics.")
         return []
 
     # Si le score est trop faible -> Activation de la pause
@@ -280,8 +280,8 @@ def selectionner_meilleurs_matchs(journee):
     
     if score_ia < 60 and not in_immunity:
         pause_until_new = journee + 2
-        print(f"🚨 ALERTE : Score IA critique ({score_ia} < 60). Activation du mode RENFORCEMENT.")
-        print(f"   ↳ Pause des pronostics pour les journées {journee}, {journee+1} et {journee+2}.")
+        print(f"[ALERTE] Score IA critique ({score_ia} < 60). Activation du mode RENFORCEMENT.")
+        print(f"   -> Pause des pronostics pour les journées {journee}, {journee+1} et {journee+2}.")
         
         try:
             with get_db_connection() as conn:
@@ -291,14 +291,14 @@ def selectionner_meilleurs_matchs(journee):
             logger.error(f"Erreur lors de la mise à jour de la pause : {e}", exc_info=True)
         return []
     elif score_ia < 60 and in_immunity:
-        print(f"🛡️ MODE IMMUNITÉ (J{journee}). Le score est critique ({score_ia}) mais on tente de se refaire (Fin pause J{pause_until}).")
+        print(f"[IMMUNITE] MODE IMMUNITÉ (J{journee}). Le score est critique ({score_ia}) mais on tente de se refaire (Fin pause J{pause_until}).")
     
     predictions = []
     
-    # 2. Cas 4 <= J < 10 : Mode "Prise de risque"
-    if 4 <= journee < 10:
-        print(f"⚠️ Mode Prise de risque (J{journee}). Seuil de confiance réduit.")
-        print(f"📊 Phase 2 : Utilisation du calcul amélioré (avec fallback si cotes manquantes)")
+    # 2. Cas 2 <= J < 10 : Mode "Prise de risque"
+    if 2 <= journee < 10:
+        print(f"[WARN] Mode Prise de risque (J{journee}). Seuil de confiance réduit.")
+        print(f"[INFO] Phase 2 : Utilisation du calcul amélioré (avec fallback si cotes manquantes)")
         seuil_confiance = 5.0  # Seuil modéré selon le guide (au lieu de 3.5)
         
         try:
@@ -316,11 +316,22 @@ def selectionner_meilleurs_matchs(journee):
             pred, confiance = calculer_probabilite_avec_fallback(dom_id, ext_id, c1, cx, c2)
             
             if pred and confiance > seuil_confiance:
+                # Récupérer les noms des équipes
+                cursor.execute("SELECT nom FROM equipes WHERE id = ?", (dom_id,))
+                result_dom = cursor.fetchone()
+                nom_dom = result_dom[0] if result_dom else f"Équipe {dom_id}"
+                cursor.execute("SELECT nom FROM equipes WHERE id = ?", (ext_id,))
+                result_ext = cursor.fetchone()
+                nom_ext = result_ext[0] if result_ext else f"Équipe {ext_id}"
+                
                 predictions.append({
                     'equipe_dom_id': dom_id,
                     'equipe_ext_id': ext_id,
+                    'equipe_dom': nom_dom,
+                    'equipe_ext': nom_ext,
                     'prediction': pred,
-                    'confiance': confiance
+                    'confiance': confiance,
+                    'fiabilite': confiance  # Pour compatibilité avec l'affichage
                 })
                 
     # 3. Cas J >= 10 : Mode Standard (avec Intelligence Adaptative)
@@ -344,9 +355,9 @@ def selectionner_meilleurs_matchs(journee):
             seuil_confiance = 6.0  # Ajusté selon le guide
             mode = "OFFENSIF"
             
-        print(f"🧠 ANALYSE IA : {ratio_str} ({taux_succes*100:.0f}%) -> {mode}")
-        print(f"   ↳ Seuil de confiance : {seuil_confiance}")
-        print(f"📊 Phase 2 : Utilisation du calcul amélioré (avec fallback si cotes manquantes)")
+        print(f"   [IA] ANALYSE IA : {ratio_str} ({taux_succes*100:.0f}%) -> {mode}")
+        print(f"   -> Seuil de confiance : {seuil_confiance}")
+        print(f"[INFO] Phase 2 : Utilisation du calcul amélioré (avec fallback si cotes manquantes)")
         
         try:
             with get_db_connection() as conn:
@@ -364,11 +375,22 @@ def selectionner_meilleurs_matchs(journee):
             
             # On utilise le seuil dynamique déterminé par l'IA
             if pred and confiance > seuil_confiance:
+                # Récupérer les noms des équipes
+                cursor.execute("SELECT nom FROM equipes WHERE id = ?", (dom_id,))
+                result_dom = cursor.fetchone()
+                nom_dom = result_dom[0] if result_dom else f"Équipe {dom_id}"
+                cursor.execute("SELECT nom FROM equipes WHERE id = ?", (ext_id,))
+                result_ext = cursor.fetchone()
+                nom_ext = result_ext[0] if result_ext else f"Équipe {ext_id}"
+                
                 predictions.append({
                     'equipe_dom_id': dom_id,
                     'equipe_ext_id': ext_id,
+                    'equipe_dom': nom_dom,
+                    'equipe_ext': nom_ext,
                     'prediction': pred,
-                    'confiance': confiance
+                    'confiance': confiance,
+                    'fiabilite': confiance  # Pour compatibilité avec l'affichage
                 })
     
     predictions.sort(key=lambda x: x['confiance'], reverse=True)
@@ -434,8 +456,8 @@ def selectionner_meilleurs_matchs_ameliore(journee):
     
     # Si une pause est active
     if pause_until >= journee:
-        print(f"🛑 MODE RENFORCEMENT ACTIF (J{journee}). Pause jusqu'à la journée {pause_until + 1}.")
-        print("   ↳ Le programme continue de scanner les données sans faire de pronostics.")
+        print(f"[STOP] MODE RENFORCEMENT ACTIF (J{journee}). Pause jusqu'à la journée {pause_until + 1}.")
+        print("   -> Le programme continue de scanner les données sans faire de pronostics.")
         return []
 
     # Si le score est trop faible -> Activation de la pause
@@ -444,8 +466,8 @@ def selectionner_meilleurs_matchs_ameliore(journee):
     
     if score_ia < 60 and not in_immunity:
         pause_until_new = journee + 2
-        print(f"🚨 ALERTE : Score IA critique ({score_ia} < 60). Activation du mode RENFORCEMENT.")
-        print(f"   ↳ Pause des pronostics pour les journées {journee}, {journee+1} et {journee+2}.")
+        print(f"[ALERTE] Score IA critique ({score_ia} < 60). Activation du mode RENFORCEMENT.")
+        print(f"   -> Pause des pronostics pour les journées {journee}, {journee+1} et {journee+2}.")
         
         try:
             with get_db_connection() as conn:
@@ -455,14 +477,14 @@ def selectionner_meilleurs_matchs_ameliore(journee):
             logger.error(f"Erreur lors de la mise à jour de la pause : {e}", exc_info=True)
         return []
     elif score_ia < 60 and in_immunity:
-        print(f"🛡️ MODE IMMUNITÉ (J{journee}). Le score est critique ({score_ia}) mais on tente de se refaire (Fin pause J{pause_until}).")
+        print(f"[IMMUNITE] MODE IMMUNITÉ (J{journee}). Le score est critique ({score_ia}) mais on tente de se refaire (Fin pause J{pause_until}).")
     
     predictions = []
     
     # 2. Détermination du seuil de confiance (Intelligence adaptative)
-    if 4 <= journee < 10:
+    if 2 <= journee < 10:
         seuil_confiance = 5.0  # Mode prise de risque modéré
-        print(f"⚠️ Mode Prise de risque (J{journee}). Seuil : {seuil_confiance}")
+        print(f"[WARN] Mode Prise de risque (J{journee}). Seuil : {seuil_confiance}")
     else:
         taux_succes, ratio_str = analyser_performances_recentes()
         
@@ -479,8 +501,8 @@ def selectionner_meilleurs_matchs_ameliore(journee):
             seuil_confiance = 6.0
             mode = "OFFENSIF"
         
-        print(f"🧠 ANALYSE IA : {ratio_str} ({taux_succes*100:.0f}%) -> {mode}")
-        print(f"   ↳ Seuil de confiance : {seuil_confiance}")
+        print(f"   [IA] ANALYSE IA : {ratio_str} ({taux_succes*100:.0f}%) -> {mode}")
+        print(f"   -> Seuil de confiance : {seuil_confiance}")
     
     # 3. Récupération des matchs avec cotes
     try:
@@ -493,7 +515,19 @@ def selectionner_meilleurs_matchs_ameliore(journee):
         return []
     
     # 4. Analyse de chaque match avec le nouveau système complet
-    print(f"📊 Phase 3 : Analyse avec système amélioré multi-facteurs")
+    print(f"[INFO] Phase 3 : Analyse avec système amélioré multi-facteurs")
+    
+    # Récupérer les noms des équipes une seule fois pour optimiser
+    equipes_noms = {}
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, nom FROM equipes")
+            for row in cursor.fetchall():
+                equipes_noms[row[0]] = row[1]
+    except Exception as e:
+        logger.error(f"Erreur lors de la récupération des noms d'équipes : {e}")
+    
     for m in matchs:
         dom_id, ext_id, c1, cx, c2 = m
         
@@ -506,11 +540,18 @@ def selectionner_meilleurs_matchs_ameliore(journee):
         pred, confiance = calculer_probabilite_amelioree(dom_id, ext_id, c1, cx, c2)
         
         if pred and confiance > seuil_confiance:
+            # Récupérer les noms des équipes depuis le dictionnaire
+            nom_dom = equipes_noms.get(dom_id, f"Équipe {dom_id}")
+            nom_ext = equipes_noms.get(ext_id, f"Équipe {ext_id}")
+            
             predictions.append({
                 'equipe_dom_id': dom_id,
                 'equipe_ext_id': ext_id,
+                'equipe_dom': nom_dom,
+                'equipe_ext': nom_ext,
                 'prediction': pred,
-                'confiance': confiance
+                'confiance': confiance,
+                'fiabilite': confiance  # Pour compatibilité avec l'affichage
             })
 
     # =========================================================================
@@ -518,7 +559,7 @@ def selectionner_meilleurs_matchs_ameliore(journee):
     # =========================================================================
     # On profite de la boucle pour demander l'avis de Zeus
     # Cela n'impacte PAS les predictions officielles (shadow)
-    print("⚡ ZEUS : Analyse en cours (Shadow Mode)...")
+    print("[ZEUS] ZEUS : Analyse en cours (Shadow Mode)...")
     try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
@@ -526,11 +567,10 @@ def selectionner_meilleurs_matchs_ameliore(journee):
                 dom_id, ext_id, c1, cx, c2 = m
                 
                 # Récup info manquante pour vecteur (classement/forme)
-                # Note: On refait une petite requête, ou on optimise en amont. 
-                # Pour V1 shadow, on fait simple.
-                cursor.execute("SELECT position, forme, points FROM classement WHERE equipe_id = ? AND journee = ?", (dom_id, journee))
+                # Note: On utilise le dernier classement disponible pour que Zeus puisse prédire les matchs futurs
+                cursor.execute("SELECT position, forme, points FROM classement WHERE equipe_id = ? ORDER BY journee DESC LIMIT 1", (dom_id,))
                 d_info = cursor.fetchone()
-                cursor.execute("SELECT position, forme, points FROM classement WHERE equipe_id = ? AND journee = ?", (ext_id, journee))
+                cursor.execute("SELECT position, forme, points FROM classement WHERE equipe_id = ? ORDER BY journee DESC LIMIT 1", (ext_id,))
                 e_info = cursor.fetchone()
 
                 if d_info and e_info:
@@ -551,7 +591,7 @@ def selectionner_meilleurs_matchs_ameliore(journee):
                      
                      # Log console si intéressant
                      if action != 3:
-                         print(f"   ⚡ Zeus conseille : {pred_zeus} pour {dom_id} vs {ext_id}")
+                         print(f"   [ZEUS] Zeus conseille : {pred_zeus} pour {dom_id} vs {ext_id}")
                      
                      # Sauvegarde DB
                      try:
