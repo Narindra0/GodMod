@@ -30,7 +30,7 @@ def get_db_connection():
         conn.execute("PRAGMA journal_mode = WAL")
         conn.execute("PRAGMA synchronous = NORMAL")
     
-    conn.row_factory = sqlite3.Row if not is_remote else None # libSQL may handle rows differently but usually compatible
+    conn.row_factory = sqlite3.Row
     
     try:
         yield conn
@@ -102,6 +102,8 @@ def initialiser_db():
             position INTEGER,
             points INTEGER NOT NULL,
             forme TEXT,
+            buts_pour INTEGER DEFAULT 0,
+            buts_contre INTEGER DEFAULT 0,
             FOREIGN KEY (equipe_id) REFERENCES equipes(id),
             UNIQUE(journee, equipe_id)
         )
@@ -168,6 +170,19 @@ def initialiser_db():
         )
     ''')
     
+    # --- MIGRATION : Ajout des colonnes manquantes si nécessaire ---
+    try:
+        cursor.execute("PRAGMA table_info(classement)")
+        columns = [col[1] for col in cursor.fetchall()]
+        if "buts_pour" not in columns:
+            logger.info("Migration : Ajout de la colonne buts_pour à la table classement")
+            cursor.execute("ALTER TABLE classement ADD COLUMN buts_pour INTEGER DEFAULT 0")
+        if "buts_contre" not in columns:
+            logger.info("Migration : Ajout de la colonne buts_contre à la table classement")
+            cursor.execute("ALTER TABLE classement ADD COLUMN buts_contre INTEGER DEFAULT 0")
+    except Exception as e:
+        logger.warning(f"Erreur lors de la migration auto des colonnes : {e}")
+
     # --- IMPORTANT : Initialisation des données de base ---
     
     # 1. Insérer les équipes si elles n'existent pas

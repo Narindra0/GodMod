@@ -3,8 +3,10 @@ import pandas as pd
 import sqlite3
 import os
 import time
+import threading
 from datetime import datetime
-from src.core import config
+from src.core import config, database
+from src.api.api_monitor import start_monitoring
 
 # Configuration de la page
 st.set_page_config(
@@ -135,6 +137,38 @@ score = df_perf['score'].iloc[0] if not df_perf.empty else 0
 wins = df_wins['wins'].iloc[0] if not df_wins.empty else 0
 total_history = df_perf['total'].iloc[0] if not df_perf.empty else 0
 win_rate = (wins / total_history * 100) if total_history > 0 else 0
+
+# --- INITIALISATION ET BACKGROUND MONITOR ---
+
+def run_monitor():
+    """Fonction pour lancer le monitor en arrière-plan."""
+    try:
+        from main import callback_predictions_ia
+        print("[BACKGROUND] Démarrage du monitor API...")
+        start_monitoring(
+            callback_on_new_journee=callback_predictions_ia,
+            verbose=False
+        )
+    except Exception as e:
+        print(f"[BACKGROUND ERROR] {e}")
+
+# Initialisation de la BDD au démarrage
+if 'db_initialized' not in st.session_state:
+    try:
+        database.initialiser_db()
+        st.session_state.db_initialized = True
+        print("[INIT] Base de données initialisée.")
+    except Exception as e:
+        st.error(f"Erreur initialisation BDD : {e}")
+
+# Lancement du thread monitor s'il n'existe pas encore (singleton global)
+if 'monitor_thread' not in st.session_state:
+    # On utilise un flag global pour éviter les doubles lancements lors des reruns
+    if not any(t.name == "GODMOD_Monitor" for t in threading.enumerate()):
+        thread = threading.Thread(target=run_monitor, name="GODMOD_Monitor", daemon=True)
+        thread.start()
+        st.session_state.monitor_thread = True
+        print("[INIT] Monitor thread lancé.")
 
 # Détermination de la journée actuelle
 current_journee = df_results['J'].max() if not df_results.empty else 0
