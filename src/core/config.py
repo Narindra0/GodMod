@@ -46,31 +46,3 @@ USE_INTELLIGENCE_AMELIOREE = True
 # - True  : utilise selectionner_meilleurs_matchs_ameliore() (Phase 3 - Recommandé)
 #           Inclut : 7 facteurs, détection pièges, confrontations directes, momentum
 USE_SELECTION_AMELIOREE = True
-
-# Sélecteurs CSS pour les résultats
-SELECTORS = {
-    "result_container": ".result-container",
-    "result_header": ".header",
-    "result_row": ".row",
-    "home_team": ".left-team.column .team span",
-    "away_team": ".right-team.column .team span",
-    "match_score": ".match-score",
-    # Sélecteurs pour le classement
-    "ranking_row": "hg-instant-league-ranking table tbody tr",
-    "ranking_team": "td div.rank-name",
-    "ranking_points": "td span.points",
-    "ranking_form": "td ul li img",
-    # Sélecteurs pour les cotes des matchs à venir
-    "match_row_odds": "div.match.bet-type-1x2",
-    "teams_container": ".teams",
-    "odds_item": "hg-event-bet-type-item span.odds.no-label",
-    "time_slot_active": "li.ng-star-inserted.active div",
-    # Sélecteurs de synchronisation
-    "live_indicator": "div:has-text('Live')",
-    "results_section_title": "div:has-text('Résultats')",
-    "timer_indicator": "text=/01:../"
-}
-
-# Configuration Playwright
-HEADLESS = False  # Set to True for production
-TIMEOUT = 60000  # 60 seconds

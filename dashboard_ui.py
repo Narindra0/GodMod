@@ -124,20 +124,6 @@ def load_all_data():
 st.title("⚡ GODMOD V2 | Intelligence Center")
 st.markdown(f"*Dernière mise à jour : {datetime.now().strftime('%H:%M:%S')}*")
 
-# Chargement
-df_perf, df_wins, df_preds, df_results, df_ranking, df_trend, df_score_ia, df_zeus = load_all_data()
-
-score_ia = df_score_ia['score'].iloc[0] if not df_score_ia.empty else 100
-ia_total = df_score_ia['predictions_total'].iloc[0] if not df_score_ia.empty else 0
-ia_wins = df_score_ia['predictions_reussies'].iloc[0] if not df_score_ia.empty else 0
-pause_until = df_score_ia['pause_until'].iloc[0] if not df_score_ia.empty and 'pause_until' in df_score_ia.columns else 0
-
-# ... 
-score = df_perf['score'].iloc[0] if not df_perf.empty else 0
-wins = df_wins['wins'].iloc[0] if not df_wins.empty else 0
-total_history = df_perf['total'].iloc[0] if not df_perf.empty else 0
-win_rate = (wins / total_history * 100) if total_history > 0 else 0
-
 # --- INITIALISATION ET BACKGROUND MONITOR ---
 
 def run_monitor():
@@ -152,7 +138,7 @@ def run_monitor():
     except Exception as e:
         print(f"[BACKGROUND ERROR] {e}")
 
-# Initialisation de la BDD au démarrage
+# Initialisation de la BDD au démarrage (AVANT de charger les données)
 if 'db_initialized' not in st.session_state:
     try:
         database.initialiser_db()
@@ -169,6 +155,19 @@ if 'monitor_thread' not in st.session_state:
         thread.start()
         st.session_state.monitor_thread = True
         print("[INIT] Monitor thread lancé.")
+
+# --- CHARGEMENT DES DONNÉES ---
+df_perf, df_wins, df_preds, df_results, df_ranking, df_trend, df_score_ia, df_zeus = load_all_data()
+
+score_ia = df_score_ia['score'].iloc[0] if not df_score_ia.empty else 100
+ia_total = df_score_ia['predictions_total'].iloc[0] if not df_score_ia.empty else 0
+ia_wins = df_score_ia['predictions_reussies'].iloc[0] if not df_score_ia.empty else 0
+pause_until = df_score_ia['pause_until'].iloc[0] if not df_score_ia.empty and 'pause_until' in df_score_ia.columns else 0
+
+score = df_perf['score'].iloc[0] if not df_perf.empty else 0
+wins = df_wins['wins'].iloc[0] if not df_wins.empty else 0
+total_history = df_perf['total'].iloc[0] if not df_perf.empty else 0
+win_rate = (wins / total_history * 100) if total_history > 0 else 0
 
 # Détermination de la journée actuelle
 current_journee = df_results['J'].max() if not df_results.empty else 0

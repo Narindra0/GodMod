@@ -30,7 +30,12 @@ def get_db_connection():
         conn.execute("PRAGMA journal_mode = WAL")
         conn.execute("PRAGMA synchronous = NORMAL")
     
-    conn.row_factory = sqlite3.Row
+    try:
+        conn.row_factory = sqlite3.Row
+    except Exception:
+        # libSQL ou certaines versions de Connection ne supportent pas row_factory
+        # On ignore l'erreur car le code utilise principalement des accès par index
+        pass
     
     try:
         yield conn
@@ -41,6 +46,26 @@ def get_db_connection():
         raise
     finally:
         conn.close()
+
+def row_to_dict(row, cursor):
+    """
+    Convertit une ligne de résultat en dictionnaire de manière robuste.
+    Fonctionne avec sqlite3.Row, dict, ou tuple simple.
+    """
+    if row is None:
+        return None
+    if isinstance(row, dict):
+        return row
+    
+    try:
+        # Tentative sqlite3.Row (supporte dict(row))
+        return dict(row)
+    except (TypeError, ValueError, AttributeError):
+        # Fallback pour tuple simple via cursor.description
+        if hasattr(cursor, 'description') and cursor.description:
+            colnames = [col[0] for col in cursor.description]
+            return dict(zip(colnames, row))
+        return row
 
 def initialiser_db():
     """Initialise la base de données avec une structure normalisée."""

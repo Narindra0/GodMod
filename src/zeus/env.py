@@ -50,11 +50,10 @@ class ZeusEnv(gym.Env):
         """
         try:
             with database.get_db_connection() as conn:
-                # Need to fetch as dict for easier handling
-                conn.row_factory = sqlite3.Row
                 cursor = conn.cursor()
                 rows = cursor.execute(query).fetchall()
-                self.matches = [dict(row) for row in rows]
+                # Conversion sécurisée en dict via le helper
+                self.matches = [database.row_to_dict(row, cursor) for row in rows]
                 logger.info(f"ZeusEnv chargé avec {len(self.matches)} matchs historiques.")
         except Exception as e:
             logger.error(f"Erreur chargement données ZeusEnv: {e}")
