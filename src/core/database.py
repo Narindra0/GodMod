@@ -1,5 +1,11 @@
 import sqlite3
 import logging
+import os
+try:
+    import libsql
+    HAS_LIBSQL = True
+except ImportError:
+    HAS_LIBSQL = False
 from contextlib import contextmanager
 from . import config
 
@@ -10,14 +16,22 @@ logger = logging.getLogger(__name__)
 def get_db_connection():
     """
     Context manager pour les connexions DB.
-    Gère automatiquement l'ouverture, la configuration, le commit/rollback et la fermeture.
-    Améliore les performances avec WAL mode et assure la sécurité des transactions.
+    Gère automatiquement l'ouverture (SQLite ou libSQL), la configuration, le commit/rollback et la fermeture.
     """
-    conn = sqlite3.connect(config.DB_NAME)
-    conn.row_factory = sqlite3.Row  # Accès par nom de colonne
-    conn.execute("PRAGMA foreign_keys = ON")
-    conn.execute("PRAGMA journal_mode = WAL")  # Améliore les performances en lecture/écriture
-    conn.execute("PRAGMA synchronous = NORMAL")  # Équilibre performance/sécurité
+    is_remote = config.TURSO_URL and config.TURSO_TOKEN
+    
+    if is_remote:
+        if not HAS_LIBSQL:
+            raise ImportError("La bibliothèque 'libsql' est requise pour se connecter à Turso. Installez-la avec 'pip install libsql'.")
+        conn = libsql.connect(config.TURSO_URL, auth_token=config.TURSO_TOKEN)
+    else:
+        conn = sqlite3.connect(config.DB_NAME)
+        conn.execute("PRAGMA foreign_keys = ON")
+        conn.execute("PRAGMA journal_mode = WAL")
+        conn.execute("PRAGMA synchronous = NORMAL")
+    
+    conn.row_factory = sqlite3.Row if not is_remote else None # libSQL may handle rows differently but usually compatible
+    
     try:
         yield conn
         conn.commit()
@@ -30,10 +44,18 @@ def get_db_connection():
 
 def initialiser_db():
     """Initialise la base de données avec une structure normalisée."""
-    conn = sqlite3.connect(config.DB_NAME)
+    is_remote = config.TURSO_URL and config.TURSO_TOKEN
+    
+    if is_remote:
+        conn = libsql.connect(config.TURSO_URL, auth_token=config.TURSO_TOKEN)
+    else:
+        conn = sqlite3.connect(config.DB_NAME)
+    
     cursor = conn.cursor()
-    # Activation des clés étrangères pour SQLite
-    cursor.execute("PRAGMA foreign_keys = ON")
+    
+    if not is_remote:
+        # Activation des clés étrangères pour SQLite uniquement
+        cursor.execute("PRAGMA foreign_keys = ON")
     # 1. Table des équipes (Référence unique)
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS equipes (

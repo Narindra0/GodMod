@@ -7,6 +7,8 @@ URL_CLASSEMENT = "https://bet261.mg/virtual/category/instant-league/8035/ranking
 
 # Configuration de la base de données
 DB_NAME = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "godmod_v2.db")
+TURSO_URL = os.getenv("TURSO_URL")
+TURSO_TOKEN = os.getenv("TURSO_TOKEN")
 
 # Équipes de la English Virtual League (20)
 EQUIPES = [
