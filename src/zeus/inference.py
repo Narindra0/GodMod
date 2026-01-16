@@ -12,15 +12,30 @@ def get_agent():
     if _zeus_agent is None:
         try:
             # On instancie l'agent sans entraînement
-            _zeus_agent = ZeusAgent(model_name="zeus_v1")
+            # MODÈLE ACTIF : zeus_v3 (Profit-Driven)
+            _zeus_agent = ZeusAgent(model_name="zeus_v3")
             success = _zeus_agent.load()
             if not success:
-                logger.warning("Zeus: Impossible de charger le modèle zeus_v1.")
+                logger.warning("Zeus: Impossible de charger le modèle zeus_v3.")
                 _zeus_agent = None
         except Exception as e:
             logger.error(f"Zeus: Erreur init agent: {e}")
             return None
     return _zeus_agent
+
+def reload_model():
+    """
+    Force le rechargement du modèle Zeus depuis le disque.
+    """
+    global _zeus_agent
+    logger.info("Zeus: Reloading model...")
+    _zeus_agent = None  # Force reset
+    success = get_agent() is not None
+    if success:
+         logger.info("Zeus: Model reloaded successfully.")
+    else:
+         logger.error("Zeus: Failed to reload model.")
+    return success
 
 def predire_match(match_data):
     """

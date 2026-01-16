@@ -236,6 +236,7 @@ def reinitialiser_tables_session():
             cursor.execute("DELETE FROM predictions")
             cursor.execute("DELETE FROM cotes")
             cursor.execute("DELETE FROM classement")
+            cursor.execute("DELETE FROM zeus_predictions")
             
             # Réinitialisation pour nouvelle session (score IA conservé)
             cursor.execute("""

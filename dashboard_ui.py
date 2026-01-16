@@ -98,13 +98,22 @@ def load_all_data():
         # Trend
         df_trend = pd.read_sql_query("SELECT id, points_gagnes FROM predictions WHERE succes IS NOT NULL ORDER BY id", conn)
         
-        # ZEUS Data (Shadow Mode)
+        # ZEUS Data (Active Mode) - Avec Join Résultats pour calcul succès
         df_zeus = pd.read_sql_query("""
-            SELECT z.journee as J, e1.nom as Domicile, e2.nom as Exterieur, z.prediction as RawPred, z.confiance, z.timestamp
+            SELECT 
+                z.journee as J, 
+                e1.nom as Domicile, 
+                e2.nom as Exterieur, 
+                z.prediction as RawPred, 
+                z.confiance, 
+                z.timestamp,
+                r.score_dom, 
+                r.score_ext
             FROM zeus_predictions z
             JOIN equipes e1 ON z.equipe_dom_id = e1.id
             JOIN equipes e2 ON z.equipe_ext_id = e2.id
-            ORDER BY z.id DESC LIMIT 20
+            LEFT JOIN resultats r ON z.journee = r.journee AND z.equipe_dom_id = r.equipe_dom_id
+            ORDER BY z.id DESC LIMIT 1000
         """, conn)
 
         return df_perf, df_wins, df_preds, df_results, df_ranking, df_trend, df_score_ia, df_zeus
@@ -113,7 +122,6 @@ def load_all_data():
 st.title("⚡ GODMOD V2 | Intelligence Center")
 st.markdown(f"*Dernière mise à jour : {datetime.now().strftime('%H:%M:%S')}*")
 
-# Chargement
 # Chargement
 df_perf, df_wins, df_preds, df_results, df_ranking, df_trend, df_score_ia, df_zeus = load_all_data()
 
@@ -152,7 +160,7 @@ st.markdown("---")
 col_left, col_right = st.columns([2, 1])
 
 with col_left:
-    tab_preds, tab_zeus, tab_results = st.tabs(["🎯 Prédictions", "⚡ Module ZEUS (Shadow)", "📜 Derniers Résultats"])
+    tab_preds, tab_zeus, tab_results = st.tabs(["🎯 Prédictions", "⚡ SUPER-INTELLIGENCE (Zeus v2)", "📜 Derniers Résultats"])
     
     with tab_preds:
         # Détermination de la journée actuelle (Max des résultats + 1)
@@ -199,42 +207,173 @@ with col_left:
             st.info("Aucune prédiction enregistrée.")
             
     with tab_zeus:
-        st.subheader("⚡ Activité du Module Zeus (Mode Ombre)")
-        st.info("Zeus observe les matchs et propose ses actions sans parier (Shadow Mode). Comparaison en cours...")
-        
         if not df_zeus.empty:
-            # Mapping des actions
-            def map_action(x):
-                if x == 0: return "1 (Domicile)"
-                elif x == 1: return "N (Nul)"
-                elif x == 2: return "2 (Extérieur)"
-                elif x == 3: return "SKIP (Prudence)"
+            # --- GLOBAL STATS (Avant Filtrage) ---
+            # 1. Calcul du succès sur TOUT l'historique
+            stats_zeus = df_zeus.copy()
+            
+            def check_zeus_success(row):
+                if pd.isna(row['score_dom']): return None
+                res_reel = 0
+                if row['score_dom'] > row['score_ext']: res_reel = 0 # 1
+                elif row['score_dom'] == row['score_ext']: res_reel = 1 # N
+                else: res_reel = 2 # 2
+                
+                if row['RawPred'] == 3: return None # Skip
+                return 1 if row['RawPred'] == res_reel else 0
+            
+            stats_zeus['ZeusSuccess'] = stats_zeus.apply(check_zeus_success, axis=1)
+            
+            global_wins = stats_zeus['ZeusSuccess'].sum()
+            global_attempts = stats_zeus['ZeusSuccess'].count()
+            global_skips = len(stats_zeus[stats_zeus['RawPred']==3])
+            global_rate = (global_wins / global_attempts * 100) if global_attempts > 0 else 0
+            
+            # --- HEADER + CIRCULAR PROGRESS ---
+            # CSS pour le cercle de progression
+            st.markdown(f"""
+            <style>
+                .zeus-header-container {{
+                    background-color: #0d1117; 
+                    border: 1px solid #238636; 
+                    border-radius: 10px; 
+                    padding: 20px; 
+                    margin-bottom: 20px; 
+                    display: flex; 
+                    align-items: center;
+                    justify-content: space-between;
+                }}
+                .zeus-info {{
+                    flex-grow: 1;
+                }}
+                .radial-progress {{
+                    position: relative;
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%;
+                    background: conic-gradient(#3fb950 {global_rate}%, #30363d 0);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-left: 20px;
+                    box-shadow: 0 0 10px rgba(63, 185, 80, 0.2);
+                }}
+                .radial-progress::before {{
+                    content: "";
+                    position: absolute;
+                    width: 70px;
+                    height: 70px;
+                    border-radius: 50%;
+                    background-color: #0d1117;
+                }}
+                .percentage {{
+                    position: relative;
+                    font-family: 'Orbitron', sans-serif;
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: #fff;
+                }}
+                .metric-box {{
+                    background: #161b22;
+                    padding: 10px;
+                    border-radius: 8px;
+                    text-align: center;
+                    border: 1px solid #30363d;
+                    min-width: 100px;
+                }}
+                .metric-label {{ color: #8b949e; font-size: 12px; }}
+                .metric-value {{ color: #e6edf3; font-size: 18px; font-weight: bold; }}
+            </style>
+            
+            <div class="zeus-header-container">
+                <div style="font-size: 40px; margin-right: 20px;">⚡</div>
+                <div class="zeus-info">
+                    <h3 style="margin: 0; color: #3fb950; font-family: 'Orbitron', sans-serif;">MODÈLE ACTIF : zeus_v3</h3>
+                    <div style="margin-top: 5px; color: #8b949e;">
+                        Version : Profit-Driven | Entraînement : 30 000 steps
+                    </div>
+                    <div style="display: flex; gap: 15px; margin-top: 15px;">
+                        <div class="metric-box">
+                            <div class="metric-label">Essais Validés</div>
+                            <div class="metric-value">{global_attempts}</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Mode Prudence (SKIP)</div>
+                            <div class="metric-value" style="color: #d29922;">{global_skips}</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Victoires</div>
+                            <div class="metric-value" style="color: #3fb950;">{int(global_wins)}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="radial-progress">
+                    <span class="percentage">{global_rate:.1f}%</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # --- FILTRAGE ET TABLEAU ---
+            st.markdown("### 📜 Historique des Prédictions")
+            
+            # Sélecteur de Journée
+            journees_z = sorted(df_zeus['J'].unique().tolist(), reverse=True)
+            journee_sel_z = st.selectbox("📅 Filtrer par Journée", journees_z, index=0, key="zeus_j_selector")
+            
+            # Filtrage pour le tableau
+            df_zeus_filtered = df_zeus[df_zeus['J'] == journee_sel_z].copy()
+            
+            # Recalcul local pour la colonne succès dans le tableau uniquement
+            df_zeus_filtered['ZeusSuccess'] = df_zeus_filtered.apply(check_zeus_success, axis=1)
+            
+            # Mapping des actions et Visualisation Confiance
+            def map_action_simple(x):
+                if x == 0: return "1"
+                elif x == 1: return "N"
+                elif x == 2: return "2"
+                elif x == 3: return "SKIP"
                 return str(x)
             
-            df_z_disp = df_zeus.copy()
-            df_z_disp['Action'] = df_z_disp['RawPred'].apply(map_action)
+            def get_conf_color(val):
+                if val < 0.5: return "🔴"
+                if val < 0.7: return "🟡"
+                return "🟢"
+                
+            df_z_disp = df_zeus_filtered.copy()
+            df_z_disp['Action'] = df_z_disp['RawPred'].apply(map_action_simple)
+            df_z_disp['Confiance_Visuel'] = df_z_disp['confiance'].apply(get_conf_color) + " " + (df_z_disp['confiance']*100).round(1).astype(str) + "%"
             
-            # Reorder
-            df_z_disp = df_z_disp[['J', 'Domicile', 'Exterieur', 'Action', 'confiance', 'timestamp']]
+            # Affichage Resultat Reel
+            def format_resultat(row):
+                if pd.isna(row['score_dom']): return "⏳"
+                return f"{int(row['score_dom'])} - {int(row['score_ext'])}"
+            
+            df_z_disp['Resultat'] = df_z_disp.apply(format_resultat, axis=1)
+            
+            # Outcome Icon
+            def outcome_icon(row):
+                 if pd.isna(row.get('ZeusSuccess')): return ""
+                 return "✅" if row['ZeusSuccess'] == 1 else "❌"
+            
+            if 'ZeusSuccess' in df_z_disp.columns:
+                df_z_disp['Outcome'] = df_z_disp.apply(outcome_icon, axis=1)
+            else:
+                df_z_disp['Outcome'] = ""
+
+            # Reorder (Sans 'J' car on filtre déjà dessus)
+            df_z_disp = df_z_disp[['Domicile', 'Exterieur', 'Action', 'Confiance_Visuel', 'Resultat', 'Outcome']]
             
             st.dataframe(
                 df_z_disp,
                 use_container_width=True,
                 hide_index=True,
                  column_config={
-                    "Action": st.column_config.TextColumn(
-                        "Conseil IA",
-                        width="medium"
-                    ),
-                    "confiance": st.column_config.ProgressColumn(
-                        "Confiance (?)",
-                        min_value=0, max_value=1,
-                        format="%.2f"
-                    )
+                    "Confiance_Visuel": st.column_config.TextColumn("Confiance"),
+                    "Outcome": st.column_config.TextColumn("Succès")
                 }
             )
         else:
-            st.warning("Aucune donnée Zeus pour l'instant. Attendez le prochain cycle.")
+            st.warning("Aucune donnée Zeus pour l'instant.")
 
     with tab_results:
         st.subheader("Résultats Officiels")

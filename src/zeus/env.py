@@ -185,27 +185,33 @@ class ZeusEnv(gym.Env):
             else:
                 return 0 # Neutre pour les paris (on ne sait pas encore)
         
-        # Déterminer le vrai résultat
+        # Déterminer le vrai résultat et la cote correspondante
         if s_dom > s_ext:
             real_result = 0 # 1
+            winning_odd = float(match.get('cote_1', 0) or 1.0)
         elif s_dom == s_ext:
             real_result = 1 # N
+            winning_odd = float(match.get('cote_x', 0) or 1.0)
         else:
             real_result = 2 # 2
+            winning_odd = float(match.get('cote_2', 0) or 1.0)
             
         if action == 3: # Skip
-            # Récompense conditionnelle:
-            # +2 SEULEMENT si le match était réellement risqué.
-            # Sinon 0 (Manque à gagner acceptable, mais pas de bonus gratuit).
-            if self.is_risky_match(match):
-                return 2 
-            else:
-                return 0 # Skip sur un match "facile" = pas de bonus
+            # Philosophie "Preservation du Capital"
+            # Ne pas parier = 0 gain, 0 perte.
+            return 0
             
         if action == real_result:
-            return 10
+            # PROFIT-DRIVEN: On gagne le profit net
+            # Ex: Cote 2.50 -> (2.50 - 1) * 10 = +15 points
+            # Ex: Cote 1.10 -> (1.10 - 1) * 10 = +1 point
+            # Cela décourage naturellement les petites cotes risquées.
+            # On utilise une mise virtuelle de 10 unités.
+            profit = (winning_odd - 1.0) * 10.0
+            return profit
         else:
-            return -15
+            # PERTE: On perd la mise
+            return -10.0
 
     def render(self, mode='human'):
         pass

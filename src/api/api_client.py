@@ -30,48 +30,41 @@ LEAGUE_ID = 8035  # ID de la ligue par défaut
 def get_ranking(league_id: int = LEAGUE_ID) -> List[Dict]:
     """
     Récupère le classement complet de la ligue en JSON
-    
-    Args:
-        league_id: ID de la ligue (par défaut: 8035)
-    
-    Returns:
-        Liste des équipes avec leurs statistiques
     """
     url = f"{BASE_URL}/instantleagues/{league_id}/ranking"
     
     try:
-        response = requests.get(url, headers=HEADERS, timeout=10)
-        response.raise_for_status()  # Lève une exception si status != 200
+        response = requests.get(url, headers=HEADERS, timeout=15)
         
-        # Le site renvoie un objet avec une clé 'teams'
+        # Gestion specifique 502/503 (Maintenance)
+        if response.status_code in [502, 503, 504]:
+            print(f"⚠️ API en Maintenance (Code {response.status_code})")
+            return []
+            
+        response.raise_for_status() 
         data = response.json()
         return data.get("teams", [])
     
     except requests.exceptions.Timeout:
-        print(f"⏱️ Timeout lors de la récupération du classement")
+        print(f"⏱️ Timeout API Ranking (>15s)")
         return []
     except requests.exceptions.RequestException as e:
         print(f"❌ Erreur API Ranking : {e}")
         return []
 
-
 def get_recent_results(league_id: int = LEAGUE_ID, skip: int = 0, take: int = 5) -> Dict:
     """
     Récupère les résultats récents de la ligue
-    
-    Args:
-        league_id: ID de la ligue
-        skip: Nombre de résultats à sauter (pagination)
-        take: Nombre de résultats à récupérer
-    
-    Returns:
-        Dictionnaire contenant les rounds et matchs
     """
     url = f"{BASE_URL}/instantleagues/{league_id}/results"
     params = {"skip": skip, "take": take}
     
     try:
-        response = requests.get(url, headers=HEADERS, params=params, timeout=10)
+        response = requests.get(url, headers=HEADERS, params=params, timeout=15)
+        
+        if response.status_code in [502, 503, 504]:
+            return {"rounds": []}
+            
         response.raise_for_status()
         return response.json()
     
@@ -79,21 +72,18 @@ def get_recent_results(league_id: int = LEAGUE_ID, skip: int = 0, take: int = 5)
         print(f"❌ Erreur API Results : {e}")
         return {"rounds": []}
 
-
 def get_upcoming_matches(league_id: int = LEAGUE_ID) -> Dict:
     """
     Récupère les matchs à venir de la ligue
-    
-    Args:
-        league_id: ID de la ligue
-    
-    Returns:
-        Dictionnaire contenant les rounds et matchs avec cotes
     """
     url = f"{BASE_URL}/instantleagues/{league_id}/matches"
     
     try:
-        response = requests.get(url, headers=HEADERS, timeout=10)
+        response = requests.get(url, headers=HEADERS, timeout=15)
+        
+        if response.status_code in [502, 503, 504]:
+            return {"rounds": []}
+            
         response.raise_for_status()
         return response.json()
     

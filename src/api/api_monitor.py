@@ -23,6 +23,10 @@ from src.api.db_integration import insert_api_ranking, insert_api_results, inser
 from src.core.database import get_db_connection
 from src.core.archive import archiver_session, reinitialiser_tables_session
 
+# ZEUS Imports
+from src.zeus import archive_manager, inference
+from src.zeus.agent import ZeusAgent
+
 logger = logging.getLogger(__name__)
 
 # ==================== CONFIGURATION ====================
@@ -226,15 +230,17 @@ def start_monitoring(callback_on_new_journee=None, verbose=True):
                 
                 if api_journee is None and journee_cotes is None:
                     consecutive_errors += 1
-                    logger.warning(f"[MONITOR] Impossible de recuperer journee API (Erreur {consecutive_errors}/{MONITOR_CONFIG['MAX_RETRIES']})")
                     
-                    if consecutive_errors >= MONITOR_CONFIG['MAX_RETRIES']:
-                        logger.error("[MONITOR] Trop d'erreurs consecutives, arret surveillance")
-                        print(f"\n[ERREUR] Impossible de contacter l'API apres {MONITOR_CONFIG['MAX_RETRIES']} tentatives")
-                        break
+                    # Backoff exponentiel : 10s, 20s, 40s, 80s... max 5min (300s)
+                    wait_time = min(MONITOR_CONFIG['RETRY_DELAY'] * (2 ** (consecutive_errors - 1)), 300)
                     
-                    time.sleep(MONITOR_CONFIG['RETRY_DELAY'])
+                    logger.warning(f"[MONITOR] Impossible de recuperer journee API (Erreur {consecutive_errors}). Nouvelle tentative dans {wait_time}s")
+                    print(f"[RETRY] Erreur connexion API ({consecutive_errors}). Attente {wait_time}s...")
+                    
+                    # On ne break plus jamais la boucle, on attend juste plus longtemps
+                    time.sleep(wait_time)
                     continue
+
                 
                 # Reset compteur erreurs si succes
                 consecutive_errors = 0
@@ -260,14 +266,40 @@ def start_monitoring(callback_on_new_journee=None, verbose=True):
                     print(f"   [INFO] Detection via les cotes (resultats vides)")
                     print("="*60)
                     
+
+
                     # A. Archiver
                     print("\n[AUTO] Archivage de la saison terminee...")
                     fichier = archiver_session()
                     if fichier:
                         print(f"   [OK] Archive creee : {fichier}")
+
+                    # --- ZEUS AUTO-UPDATE START ---
+                    print("\n⚡ [ZEUS] Auto-Amelioration en cours...")
+                    try:
+                        # 1. Consolidation Mémoire
+                        print("   1. Consolidation de la memoire...")
+                        count = archive_manager.rebuild_history_from_db()
+                        print(f"      -> {count} souvenirs enregistres.")
+                        
+                        # 2. Entraînement Flash (10k steps)
+                        print("   2. Entrainement Flash (10k steps)...")
+                        agent = ZeusAgent(model_name="zeus_v2") # Toujours sur v2
+                        agent.train(total_timesteps=10000)
+                        print("      -> Cerveau mis a jour.")
+                        
+                        # 3. Hot Reload
+                        print("   3. Hot Reload...")
+                        inference.reload_model()
+                        print("      -> Nouveau modele charge en memoire.")
+                        
+                    except Exception as e:
+                        print(f"   ❌ Erreur Auto-Update Zeus : {e}")
+                        logger.error(f"Zeus Auto-Update Failed: {e}", exc_info=True)
+                    # --- ZEUS AUTO-UPDATE END ---
                     
                     # B. Reinitialiser
-                    print("[AUTO] Reinitialisation de la base de donnees...")
+                    print("\n[AUTO] Reinitialisation de la base de donnees...")
                     reinitialiser_tables_session()
                     last_journee_db = 0
                     print("   [OK] Tables reinitialisees")

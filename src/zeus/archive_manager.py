@@ -129,40 +129,81 @@ def lister_journees_archivees():
         logger.error(f"Erreur liste journées archivées: {e}")
         return []
 
-def nettoyer_anciennes_archives(journees_a_garder=10):
+def calculate_points(score_dom, score_ext):
+    if score_dom > score_ext: return 3, 0
+    if score_dom < score_ext: return 0, 3
+    return 1, 1
+
+def rebuild_history_from_db():
     """
-    Nettoie les anciennes archives pour garder l'espace de stockage gérable.
+    Reconstruit tout l'historique Zeus à partir de la table resultats.
+    Utilisé en fin de saison pour consolider la mémoire avant le reset.
+    """
+    logger.info("Starting Zeus History Reconstruction...")
+    print("[ZEUS] Reconstruction de la mémoire (Histoire)...")
     
-    Args:
-        journees_a_garder (int): Nombre de journées récentes à conserver
-    """
     try:
         with database.get_db_connection() as conn:
             cursor = conn.cursor()
             
-            # Trouver la journée limite à garder
-            cursor.execute("""
-                SELECT MAX(journee) FROM zeus_classement_archive
-            """)
-            max_journee = cursor.fetchone()[0] or 0
+            # 1. Récupérer TOUS les résultats ordonnés
+            cursor.execute("SELECT journee, equipe_dom_id, equipe_ext_id, score_dom, score_ext FROM resultats WHERE score_dom IS NOT NULL ORDER BY journee ASC")
+            matchs = cursor.fetchall()
             
-            if max_journee <= journees_a_garder:
-                logger.info("Pas assez d'archives pour nettoyer")
-                return
+            if not matchs:
+                logger.warning("Aucun match trouvé pour reconstruction.")
+                return 0
+
+            # 2. Rejouer la saison match par match
+            teams = {}
+            from collections import defaultdict
+            matchs_par_journee = defaultdict(list)
+            for m in matchs:
+                matchs_par_journee[m[0]].append(m)
+                
+            sorted_journees = sorted(matchs_par_journee.keys())
+            count_total = 0
             
-            journee_limite = max_journee - journees_a_garder
+            for journee in sorted_journees:
+                for _, d_id, e_id, s_d, s_e in matchs_par_journee[journee]:
+                    if d_id not in teams: teams[d_id] = {'pts': 0, 'bp': 0, 'bc': 0, 'forme': []}
+                    if e_id not in teams: teams[e_id] = {'pts': 0, 'bp': 0, 'bc': 0, 'forme': []}
+                    
+                    teams[d_id]['bp'] += s_d
+                    teams[d_id]['bc'] += s_e
+                    teams[e_id]['bp'] += s_e
+                    teams[e_id]['bc'] += s_d
+                    
+                    p_d, p_e = calculate_points(s_d, s_e)
+                    teams[d_id]['pts'] += p_d
+                    teams[e_id]['pts'] += p_e
+                    
+                    res_d = 'V' if s_d > s_e else ('N' if s_d == s_e else 'D')
+                    res_e = 'V' if s_e > s_d else ('N' if s_e == s_d else 'D')
+                    teams[d_id]['forme'].append(res_d)
+                    teams[e_id]['forme'].append(res_e)
+                
+                # Snapshot
+                sorted_teams = sorted(teams.items(), key=lambda x: (x[1]['pts'], x[1]['bp'] - x[1]['bc'], x[1]['bp']), reverse=True)
+                
+                for position, (tid, stats) in enumerate(sorted_teams, 1):
+                    forme_str = "".join(stats['forme'][-5:])
+                    cursor.execute("""
+                        INSERT OR REPLACE INTO zeus_classement_archive 
+                        (journee, equipe_id, position, points, forme, buts_pour, buts_contre, timestamp)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    """, (journee, tid, position, stats['pts'], forme_str, stats['bp'], stats['bc'], datetime.now().isoformat()))
+                    count_total += 1
             
-            # Supprimer les anciennes archives
-            cursor.execute("""
-                DELETE FROM zeus_classement_archive 
-                WHERE journee < ?
-            """, (journee_limite,))
-            
-            deleted = cursor.rowcount
-            logger.info(f"🧹 Nettoyage: {deleted} archives supprimées (J<{journee_limite})")
+            conn.commit()
+            logger.info(f"Reconstruction terminée ({count_total} entrées).")
+            print(f"[ZEUS] Mémoire consolidée : {count_total} snapshots créés.")
+            return count_total
             
     except Exception as e:
-        logger.error(f"Erreur nettoyage archives: {e}")
+        logger.error(f"Erreur reconstruction historique: {e}")
+        return 0
+
 
 if __name__ == "__main__":
     # Test des fonctions

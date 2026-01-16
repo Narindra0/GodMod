@@ -17,7 +17,7 @@ class ZeusAgent:
     Wrapper autour du modèle RL (PPO par défaut).
     Gère l'entraînement, la sauvegarde et l'inférence.
     """
-    def __init__(self, model_name="zeus_v1", algo="PPO"):
+    def __init__(self, model_name="zeus_v2", algo="PPO"):
         self.model_name = model_name
         self.algo = algo
         self.model = None
@@ -28,9 +28,9 @@ class ZeusAgent:
         logger.info(f"Démarrage de l'entraînement {self.algo} pour {total_timesteps} steps.")
         
         if self.algo == "PPO":
-            self.model = PPO("MlpPolicy", self.env, verbose=1, tensorboard_log=LOGS_DIR)
+            self.model = PPO("MlpPolicy", self.env, verbose=1, tensorboard_log=None)
         elif self.algo == "DQN":
-            self.model = DQN("MlpPolicy", self.env, verbose=1, tensorboard_log=LOGS_DIR)
+            self.model = DQN("MlpPolicy", self.env, verbose=1, tensorboard_log=None)
         
         checkpoint_callback = CheckpointCallback(
             save_freq=10000, 
